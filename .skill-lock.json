@@ -1,0 +1,204 @@
+{
+  "version": 3,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+      "installedAt": "2026-04-28T22:06:24.307Z",
+      "updatedAt": "2026-08-25T19:48:39.420Z"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "skillFolderHash": "343db72180d05814949fef7d46be96b5c6ee86b3",
+      "installedAt": "2026-04-28T22:07:00.670Z",
+      "updatedAt": "2026-04-28T22:07:00.670Z"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "skillFolderHash": "3116f3e62dbd02b44a598b1aa690d2a8938e8f89",
+      "installedAt": "2026-04-28T22:07:00.671Z",
+      "updatedAt": "2026-04-28T22:07:00.671Z"
+    },
+    "autofix": {
+      "source": "coderabbitai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/coderabbitai/skills.git",
+      "skillPath": "skills/autofix/SKILL.md",
+      "skillFolderHash": "6bf6634dc86f933da9a9ade797c2d9cc8d49a886",
+      "installedAt": "2026-05-07T21:20:33.399Z",
+      "updatedAt": "2026-05-07T21:20:33.399Z"
+    },
+    "code-review": {
+      "source": "coderabbitai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/coderabbitai/skills.git",
+      "skillPath": "skills/code-review/SKILL.md",
+      "skillFolderHash": "5049a0877f3e224666b7bdfe4a42aaccd78b3379",
+      "installedAt": "2026-05-07T21:20:33.401Z",
+      "updatedAt": "2026-05-07T21:20:33.401Z"
+    },
+    "emil-design-eng": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/emilkowalski/skill.git",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "skillFolderHash": "175725745e70946d891b93a1694d7c9ebb71b69d",
+      "installedAt": "2026-05-15T15:39:49.177Z",
+      "updatedAt": "2026-08-25T19:48:45.439Z"
+    },
+    "write-discoverable-code": {
+      "source": "modem-dev/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/modem-dev/skills.git",
+      "skillPath": "write-discoverable-code/SKILL.md",
+      "skillFolderHash": "209109d21718bff6da3ebd65dfee8de582ced0ab",
+      "installedAt": "2026-07-21T18:08:37.509Z",
+      "updatedAt": "2026-07-21T18:08:37.509Z"
+    },
+    "better-accessibility": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/better-accessibility/SKILL.md",
+      "skillFolderHash": "ebf9388ad7f6acc424584674ac97406e2118616f",
+      "installedAt": "2026-08-05T19:37:48.181Z",
+      "updatedAt": "2026-08-31T22:52:47.640Z"
+    },
+    "better-colors": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/better-colors/SKILL.md",
+      "skillFolderHash": "2bf09c8493b760bc4449fed26079244368eaaa16",
+      "installedAt": "2026-08-05T19:37:48.183Z",
+      "updatedAt": "2026-08-31T22:52:47.642Z"
+    },
+    "better-interface": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/better-interface/SKILL.md",
+      "skillFolderHash": "828b477582842f5890fe307b4f95cdf05bd88d92",
+      "installedAt": "2026-08-05T19:37:48.192Z",
+      "updatedAt": "2026-08-31T22:52:47.651Z"
+    },
+    "better-layout": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/better-layout/SKILL.md",
+      "skillFolderHash": "8f1f1b163848cec18aea8143b9fe10cfb3226874",
+      "installedAt": "2026-08-05T19:37:48.194Z",
+      "updatedAt": "2026-08-31T22:52:47.652Z"
+    },
+    "better-typography": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/better-typography/SKILL.md",
+      "skillFolderHash": "b0c51ed316e9cca63f5182bc569066985b25b9c0",
+      "installedAt": "2026-08-05T19:37:48.195Z",
+      "updatedAt": "2026-08-31T22:52:47.653Z"
+    },
+    "better-ui": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/better-ui/SKILL.md",
+      "skillFolderHash": "710b8e9a1b4086594d24050bbb6768dbc421e9dc",
+      "installedAt": "2026-08-05T19:37:48.196Z",
+      "updatedAt": "2026-08-31T22:52:47.654Z"
+    },
+    "better-writing": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/better-writing/SKILL.md",
+      "skillFolderHash": "f0637167d46253f6f5d2d09776552df4979ea562",
+      "installedAt": "2026-08-05T19:37:48.197Z",
+      "updatedAt": "2026-08-31T22:52:47.656Z"
+    },
+    "asd-ste100": {
+      "source": "danyuchn/asd-ste100-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/danyuchn/asd-ste100-skill.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "4c1633c2d86591e6b95ba0a7b5d677dde8bc88c1",
+      "installedAt": "2026-08-28T18:23:42.038Z",
+      "updatedAt": "2026-08-28T18:23:42.038Z"
+    },
+    "break": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/break/SKILL.md",
+      "skillFolderHash": "7a748aa03499cc6974278099154358596c3635c9",
+      "installedAt": "2026-08-31T22:52:47.656Z",
+      "updatedAt": "2026-08-31T22:52:47.656Z"
+    },
+    "explain-interface": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/explain-interface/SKILL.md",
+      "skillFolderHash": "1d56e70e250e711690fdf95baa04546d9ad36020",
+      "installedAt": "2026-08-31T22:52:47.657Z",
+      "updatedAt": "2026-08-31T22:52:47.657Z"
+    },
+    "interface-review": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/interface-review/SKILL.md",
+      "skillFolderHash": "af8fbfa0733bb1c16f7e6c625161cdbef18aefda",
+      "installedAt": "2026-08-31T22:52:47.658Z",
+      "updatedAt": "2026-08-31T22:52:47.658Z"
+    },
+    "variant": {
+      "source": "jakubkrehel/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/skills.git",
+      "skillPath": "skills/variant/SKILL.md",
+      "skillFolderHash": "10e4d83f2f34cf226cf9819ab6b4dd6f8d7a0e6a",
+      "installedAt": "2026-08-31T22:52:47.659Z",
+      "updatedAt": "2026-08-31T22:52:47.659Z"
+    },
+    "github-image-upload": {
+      "source": "drogers0/gh-image",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/drogers0/gh-image.git",
+      "skillPath": "skills/github-image-upload/SKILL.md",
+      "skillFolderHash": "4a3daab83c9f2ffc7e986623583a9b1f808a9f45",
+      "installedAt": "2026-09-01T20:04:57.719Z",
+      "updatedAt": "2026-09-01T20:04:57.719Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "antigravity-cli",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-code-cli",
+    "opencode",
+    "warp",
+    "zed",
+    "claude-code"
+  ]
+}
