@@ -78,6 +78,7 @@ Hard filters — **Skip** (do not "fix while here"):
 - Demands a new abstraction when a local, consistent pattern already exists.
 - Restyles, renames, or reorganizes unrelated to the defect.
 - Already addressed on the branch (stale comment).
+- Comment or TSDoc that restates a symbol name, narrates control flow, or duplicates the README. Public-API documentation is a Fix only when the type signature cannot express a consumer contract (conditionally required arguments, thrown errors, side effects, trust boundaries).
 
 ### 3. Fix valid findings at the root
 

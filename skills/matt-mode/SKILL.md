@@ -52,9 +52,9 @@ Matt Mode orchestrates applicable specialist skills; it does not absorb or repla
 
 For code changes, completion normally requires:
 
-1. **Grounding:** inspect ownership, callers, data shapes, nearby patterns, and relevant history when intent is unclear.
+1. **Grounding:** inspect ownership, callers, data shapes, nearby patterns, and relevant history when intent is unclear. Treat a forbid-import or module-graph test as current isolation, not as the source contract. When it conflicts with the ADR, project guidelines, or a required shared error type, re-read the isolation sentence.
 2. **Implementation:** make the smallest complete change that satisfies the outcome; do not optimize for a tiny diff when it would leave a broken boundary or dead code.
-3. **Diff hygiene:** inspect the actual diff for accidental scope, weak names, narration comments, unsupported guards, casts, duplication, and repository-rule violations.
+3. **Diff hygiene:** inspect the actual diff for accidental scope, weak names, comments outside the keep-list in `references/personal-preferences.md`, unsupported guards, casts, duplication, and repository-rule violations. Do not add a comment during implementation unless it matches that keep-list.
 4. **Initial proof:** follow `/matt-verify` against the changed surface.
 5. **Independent review:** follow `/matt-review`. The reviewer must judge requirements and artifacts, not trust the author's summary.
 6. **Adjudication:** classify each finding as `fix`, `consider`, or `dismiss`, with evidence. Fix confirmed issues; do not blindly apply reviewer patches.

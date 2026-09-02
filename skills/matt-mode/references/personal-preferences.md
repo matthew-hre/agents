@@ -39,9 +39,19 @@ Do not jump directly to prose guidance when design or automation can eliminate t
 
 ## Comments
 
-- Delete comments that narrate syntax, restate a name, announce a code block, or defend avoidable complexity.
-- Prefer names, types, assertions, tests, runtime checks, and lint rules when they can encode the constraint.
-- Keep comments for irreducible why-context: external quirks, legal requirements, public API contracts, security reasoning, or non-obvious constraints that code cannot express. Include a source link when practical.
+Default: no comments. When unsure, delete. Do not shorten a restating comment to keep it.
+
+Keep only:
+
+- Legal or license headers.
+- A constraint forced by an external dependency, platform, vendor, or protocol that this code cannot reshape. Link the issue, RFC, or docs when practical.
+- Formatter escapes such as `prettier-ignore`. Lint or TypeScript suppressions only when the rule is wrong, pedantic, or style-only. If the rule catches a real bug, remove the suppression and fix the code or the type.
+- Public API TSDoc only when the signature cannot express the contract consumers must rely on: conditionally required arguments, thrown errors, side effects, or trust boundaries.
+- A link to an issue or RFC that explains a constraint the code cannot express.
+
+Delete narration, restated names, section banners, commented-out code, TODO/FIXME notes, workaround sermons, and `IMPORTANT` / `do not remove` justifications. A public JSDoc whose first sentence paraphrases the symbol name is narration.
+
+If a comment exists to explain surprising behavior in code we own, do not keep the comment. Rename, extract, type, or restructure until the behavior is obvious.
 
 ## Scope and Architecture
 
@@ -49,6 +59,17 @@ Do not jump directly to prose guidance when design or automation can eliminate t
 - Reuse established abstractions. Add a new abstraction only when it removes real complexity, has genuine reuse, or establishes a meaningful boundary.
 - Do not create shared packages or generic helpers speculatively.
 - Keep changes scoped to the requested outcome, while following necessary cleanup through callers when the change makes code dead or invalid.
+- Write a published-package README as what the next caller does. Do not introduce a name unless the caller must type it.
+- If a default already applies, keep the helper private unless a second caller must name it. Do not export constants that exist only to document the default.
+
+## Contracts and Isolation Tests
+
+- A forbid-import or module-graph test records current isolation. It is not the source ADR. When it conflicts with the ADR, project guidelines, or a required shared error type, re-read the isolation sentence. Do not invent a parallel type to keep the test green.
+
+## History After a Pull Request Exists
+
+- Before a pull request is public: absorb and squash locally so the stack is one concern per commit.
+- After the pull request is public: put review fixes and follow-up work in new commits on top. Reviewers read those commits. Do not rewrite pushed commits with absorb, squash, or edit unless the user explicitly asks.
 
 ## Tests and Evidence
 

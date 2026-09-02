@@ -36,7 +36,7 @@ There is no need to run `jj commit`.
 
 ### Commits Are Mutable
 
-**CRITICAL**: Unlike git, jj commits can be freely modified after creation. You can update descriptions, squash changes, rebase, and absorb — all without creating new commits. See "Essential Workflow" below for the recommended working pattern.
+**CRITICAL**: Unlike git, jj commits can be freely modified after creation. You can update descriptions, squash, rebase, and absorb — all without creating new commits. Use that mutability to refine a local stack before it is public. After a pull request exists on the remote, do not rewrite those commits unless the user explicitly asks. See "Absorbing Changes" below.
 
 ### Change IDs vs Commit IDs
 
@@ -120,7 +120,7 @@ jj new -m "Commit message"
 
 # Edit an existing commit (working copy becomes that commit)
 jj edit <change-id>
-# NOTE: Avoid editing commits directly, unless the user requests that. Prefer adding new commits
+# NOTE: Before a pull request is public, prefer absorb/squash over edit. After the pull request is public, do not edit pushed commits unless the user asks. Prefer a new commit on top.
 
 # Edit the previous commit
 jj prev -e
@@ -154,6 +154,12 @@ Automatically distribute changes to the commits that last modified those lines:
 # Absorb working copy changes into appropriate ancestor commits
 jj absorb
 ```
+
+Use absorb only while the stack is still local (not yet pushed, no public pull request). That is the right way to keep one concern per commit before review.
+
+Once the pull request is on the remote, put review fixes and follow-up work in new commits on top (`jj new -m "..."`). Reviewers read those commits. Do not `jj absorb`, `jj squash` into a pushed ancestor, or `jj edit` a pushed commit unless the user explicitly asks.
+
+If absorb leaves remnants in the working copy, squash them into the intended ancestor only when that ancestor is still local. After the pull request is public, leave remnants in the new commit instead.
 
 ### Abandoning Commits
 
@@ -333,7 +339,7 @@ jj st
 2. **Is it atomic?** One logical change per commit
 3. **Is the message clear?** Use imperative verb phrase in sentence case format with no full stop: e.g. "Add login endpoint", "Fix null pointer in payment processor", "Remove deprecated API endpoints"
 4. **Are there unrelated changes?** Use `jj restore` to move changes out, then create separate commits
-5. **Should changes be elsewhere?** Use `jj squash` or `jj absorb`
+5. **Should changes be elsewhere?** While the stack is still local, use `jj squash` or `jj absorb`. After the pull request is public, create a new commit on top instead.
 
 ## Quick Reference
 
@@ -360,5 +366,5 @@ jj st
 1. **Describe first**: Set the commit message before coding
 2. **One change per commit**: Keep commits atomic and focused
 3. **Use change IDs**: They're stable across rewrites
-4. **Refine commits**: Leverage mutability for clean history
+4. **Refine locally**: absorb and squash before the pull request is public; after that, add commits on top
 5. **Embrace the workflow**: No staging area, no stashing - just commits
