@@ -48,7 +48,7 @@ Do not report speculative logic bugs without a plausible input and path to the f
 - **Comments:** default to deletion. Keep only the keep-list in [`../matt-mode/references/personal-preferences.md`](../matt-mode/references/personal-preferences.md), or a stricter repository rule when one exists. Flag restating JSDoc, including a first sentence that paraphrases the symbol name. Flag comments that hide a surprise in owned code; the correction is a rename, type, or extract, not a shorter comment. When unsure whether a keep clause applies, flag the comment for deletion.
 - **Control flow:** flag hidden fallbacks, broad catches, impossible-state guards, repeated conditionals, and branches that obscure the invariant.
 - **Types:** flag `any`, unjustified casts, duplicated runtime/static shapes, missing exhaustiveness, and primitive values standing in for meaningful domain states.
-- **Structure:** flag pass-through wrappers, speculative abstractions, mixed responsibilities, misplaced logic, shotgun changes, and duplicate sources of truth.
+- **Structure:** flag pass-through wrappers, speculative abstractions, mixed responsibilities, misplaced logic, shotgun changes, and duplicate sources of truth. Flag dense declaration clusters (sibling overloads, jammed top-level types) that lack blank-line separation when personal preferences require visual chunking.
 - **Scope:** flag unrelated cleanup and compatibility code with no demonstrated consumer.
 - **Tests:** flag white-box assertions, excessive mocking, missing negative cases, and tests that merely repeat implementation.
 - **Policy:** verify applicable repository rules directly rather than relying on memory.

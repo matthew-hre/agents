@@ -43,7 +43,8 @@ If the task does not fit, construct the smallest workflow that preserves the gat
 
 Matt Mode orchestrates applicable specialist skills; it does not absorb or replace them.
 
-- Use an installed specialist skill when its trigger matches more precisely than a generic playbook. Examples include `codebase-archaeology`, `verify-findings`, `jujutsu`, `interface-review`, `hunk-review`, and framework-specific skills.
+- Use an installed specialist skill when its trigger matches more precisely than a generic playbook. Examples include `codebase-design`, `codebase-archaeology`, `verify-findings`, `jujutsu`, `interface-review`, `hunk-review`, and framework-specific skills.
+- Use `/codebase-design` when introducing or moving a seam, splitting a mixed file, deepening a shallow module cluster, or choosing where an interface should live. Prefer its vocabulary (`module`, `interface`, `seam`, `adapter`, `depth`, `leverage`, `locality`) and run Design It Twice when the seam placement is contested or expensive to reverse. Do not run it as ceremony on routine feature work that follows an established pattern.
 - For Purelend work, include relevant team-wide skills from the installed Purelend plugin. When its source checkout exists at `~/Repos/agents`, treat `skills/skill-placement/SKILL.md` as the authority for deciding whether reusable guidance belongs in the shared plugin, one repository, deterministic enforcement, personal incubation, or nowhere shared.
 - Follow specialist constraints inside the selected playbook. A read-only or approval-gated specialist remains read-only or approval-gated.
 - Prefer amending an applicable existing skill over creating an overlapping one.
@@ -54,7 +55,7 @@ For code changes, completion normally requires:
 
 1. **Grounding:** inspect ownership, callers, data shapes, nearby patterns, and relevant history when intent is unclear. Treat a forbid-import or module-graph test as current isolation, not as the source contract. When it conflicts with the ADR, project guidelines, or a required shared error type, re-read the isolation sentence.
 2. **Implementation:** make the smallest complete change that satisfies the outcome; do not optimize for a tiny diff when it would leave a broken boundary or dead code.
-3. **Diff hygiene:** inspect the actual diff for accidental scope, weak names, comments outside the keep-list in `references/personal-preferences.md`, unsupported guards, casts, duplication, and repository-rule violations. Do not add a comment during implementation unless it matches that keep-list.
+3. **Diff hygiene:** inspect the actual diff for accidental scope, weak names, comments outside the keep-list in `references/personal-preferences.md`, unsupported guards, casts, duplication, dense declaration clusters that lack blank-line separation when personal preferences require it, and repository-rule violations. Do not add a comment during implementation unless it matches that keep-list.
 4. **Initial proof:** follow `/matt-verify` against the changed surface.
 5. **Independent review:** follow `/matt-review`. The reviewer must judge requirements and artifacts, not trust the author's summary.
 6. **Adjudication:** classify each finding as `fix`, `consider`, or `dismiss`, with evidence. Fix confirmed issues; do not blindly apply reviewer patches.

@@ -21,6 +21,15 @@ Do not jump directly to prose guidance when design or automation can eliminate t
 - Keep names at the abstraction level of their owner. Difficulty naming a unit is evidence that its responsibility may be mixed.
 - Do not create trivial aliases or intermediate variables that merely repeat an expression without adding meaning.
 
+## Visual Chunking
+
+Blank lines are a readability tool for human scanning. Prefer visual separation so related declarations and logic chunks are obvious at a glance.
+
+- Prefer a blank line between sibling overloads and between dense top-level type or interface aliases that are not a tight related pair.
+- Prefer a blank line between logical phases inside a function (setup, transform, side effect, return) when the body is more than a few lines.
+- Do not fight the formatter. Keep blank lines the formatter preserves; do not invent spacing rules the formatter will collapse.
+- Do not insert blank lines inside a short interface or type body, or between every single-line statement in a tiny function.
+
 ## Function Signatures
 
 - Use one named-argument object when a function takes three or more arguments, two or more arguments share a type, or an argument is optional, boolean, or rarely supplied.
