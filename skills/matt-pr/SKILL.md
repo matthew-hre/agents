@@ -174,9 +174,9 @@ Do not use vague commits such as `address review comments` when a precise descri
 
 ## Babysit CodeRabbit on a Draft
 
-When the user explicitly asks to publish and babysit a PR, follow [`references/coderabbit-babysitter.md`](references/coderabbit-babysitter.md). Enrollment is opt-in; do not trigger CodeRabbit merely because a draft exists. Keep the PR draft throughout the loop, triage findings rather than trusting them, push only verified fixes within the approved scope, and notify the user instead of marking the PR ready.
+When the user explicitly asks to publish and babysit a PR, follow [`references/coderabbit-babysitter.md`](references/coderabbit-babysitter.md). Enrollment is opt-in; do not trigger CodeRabbit merely because a draft exists. CodeRabbit review commands must be posted through a shell GitHub credential verified as the user's identity; Cursor's bot-authored PR-comment tool is not sufficient. Keep the PR draft throughout the loop, triage findings rather than trusting them, push only verified fixes within the approved scope, and notify the user instead of marking the PR ready.
 
-The babysitter must operate on the exact current HEAD, avoid duplicate or full-review requests, stop after its bounded retry budget, and treat rate limits, ambiguous findings, failed checks, concurrent human pushes, and unavailable environments as reasons to stop and notify—not reasons to guess or force progress.
+The babysitter must operate on the exact current HEAD, avoid duplicate or full-review requests, stop after its bounded retry budget, and treat rate limits, ambiguous findings, failed checks, concurrent human pushes, and unavailable environments as reasons to stop and notify—not reasons to guess or force progress. It must never respond to human review comments. On every wake, absence of the enrollment label is an immediate permanent stop; terminal flows cancel subscriptions before removing that label.
 
 ## Readiness Gates
 

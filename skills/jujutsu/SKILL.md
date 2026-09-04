@@ -26,6 +26,8 @@ Editor-based commands will fail in non-interactive environments.
 
 2. **Verify operations with `jj st`** after mutations (`squash`, `abandon`, `rebase`, `restore`) to confirm the operation succeeded.
 
+3. **Do not parallelize working-copy transitions with file edits.** Finish `jj new`, `jj edit`, rebase, restore, or bookmark moves that change `@` before editing files in the same turn. In jj the working copy is the commit; a parallel `jj new` plus Write/StrReplace can snapshot edits into the wrong change and silently rewrite a parent (including a pushed one). Read-only jj (`st`, `log`, `diff`, `show`) may still run alongside other reads.
+
 ## Core Concepts
 
 ### The Working Copy is a Commit

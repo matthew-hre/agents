@@ -75,6 +75,18 @@ If a comment exists to explain surprising behavior in code we own, do not keep t
 
 - A forbid-import or module-graph test records current isolation. It is not the source ADR. When it conflicts with the ADR, project guidelines, or a required shared error type, re-read the isolation sentence. Do not invent a parallel type to keep the test green.
 
+## User-Visible Errors
+
+- Prefer stable, product-owned toast and alert copy over appending raw `error.message` (or similar) from API, Zod, or thrown errors.
+- We often do not know what those messages look like in every failure path, and they can expose cryptic text or implementation details to end users.
+- Put diagnostic detail in logs or developer-facing surfaces. Surface a specific message in the UI only when that feature already uses a vetted, user-safe string for that path.
+
+## Documentation Register
+
+- When editing an existing README or operator doc section, match that section's density and term precision.
+- Do not rewrite neighboring prose into marketing-simple language or into a jargon pile.
+- A greenfield doc may set its own voice; do not force an existing section to change register for polish alone.
+
 ## History After a Pull Request Exists
 
 - Before a pull request is public: absorb and squash locally so the stack is one concern per commit.
