@@ -25,17 +25,19 @@ Call out a material conflict instead of silently choosing the lower-priority ins
 
 ## Start Every Task
 
-1. Restate the observable outcome and important non-goals. Do not merely repeat the proposed implementation.
-2. Follow `/matt-preflight` to establish effective policy, ownership, risk, and proof before editing.
-3. Select exactly one primary route:
+1. Check for the trivial fast path: wording, typo, formatting, or tightly scoped semantic-preserving rename with no behavior or contract change. For these, inspect the exact scope, apply relevant policy, edit directly, inspect the diff, run the cheapest direct proof, and report. Do not produce a preflight receipt, todo list, subagent, architecture pass, or formal review.
+2. Otherwise, restate the observable outcome and important non-goals. Do not merely repeat the proposed implementation.
+3. Follow `/matt-preflight` to establish effective policy, ownership, effort, risk, and proof before editing.
+4. Select exactly one primary route:
    - Read-only explanation or investigation: `playbooks/investigate.md`
    - Why an artifact exists or whether to keep, move, replace, or delete it: `/codebase-archaeology`
    - Defect or regression: `playbooks/bug-fix.md`
    - Feature or refactor: `playbooks/feature-refactor.md`
    - Review without implementation: `playbooks/review-only.md`
+   - Structure, open, or maintain commits and pull requests: `/matt-pr`
    - Uncertain feasibility or technology question: `playbooks/spike.md`
-4. State the route and risk in one line.
-5. For nontrivial work, create a visible todo list from the selected playbook. Keep omitted stages visible as `skip: <specific reason>`.
+5. State the route, effort, and risk in one line.
+6. For nontrivial work, create a visible todo list from the selected playbook. Keep omitted stages visible as `skip: <specific reason>`.
 
 If the task does not fit, construct the smallest workflow that preserves the gates below. Do not force it into the closest playbook.
 
@@ -57,18 +59,21 @@ For code changes, completion normally requires:
 2. **Implementation:** make the smallest complete change that satisfies the outcome; do not optimize for a tiny diff when it would leave a broken boundary or dead code.
 3. **Diff hygiene:** inspect the actual diff for accidental scope, weak names, comments outside the keep-list in `references/personal-preferences.md`, unsupported guards, casts, duplication, dense declaration clusters that lack blank-line separation when personal preferences require it, and repository-rule violations. Do not add a comment during implementation unless it matches that keep-list.
 4. **Initial proof:** follow `/matt-verify` against the changed surface.
-5. **Independent review:** follow `/matt-review`. The reviewer must judge requirements and artifacts, not trust the author's summary.
+5. **Proportional review:** use inline diff review for trivial and low-effort work. Follow `/matt-review` with an independent reviewer for normal and high-risk work. The reviewer must judge requirements and artifacts, not trust the author's summary.
 6. **Adjudication:** classify each finding as `fix`, `consider`, or `dismiss`, with evidence. Fix confirmed issues; do not blindly apply reviewer patches.
 7. **Reverification:** rerun checks affected by review fixes and repeat focused review when behavior or architecture changed materially.
 
-Low-risk mechanical work may combine gates, but never silently omit applicable policy, diff inspection, or fresh verification.
+Trivial and low-effort work may combine gates, but never silently omit applicable policy, diff inspection, or fresh proportionate verification.
 
-## Review Independence
+## Proportional Agent Use
 
-- Prefer one read-only independent reviewer with clean context for normal work.
-- Use two independent reviewers or model families only for security, authorization, money, migrations, concurrency, shared protocols, subtle state logic, or genuinely contested architecture.
+- **Trivial:** wording, typo, formatting, or a tightly scoped semantic-preserving rename with no contract or behavior change. Work directly. Inspect the diff and run only the cheapest check that proves the edit. Do not create a subagent, todo plan, architecture pass, or formal review.
+- **Low:** localized mechanical code change following an established pattern with no sensitive boundary. Work directly. Perform inline diff review and targeted verification. Do not create a review or verification subagent.
+- **Normal:** meaningful behavior, multiple coupled files, new logic, or a new local seam. Use one read-only independent reviewer with clean context after initial verification.
+- **High risk:** security, authorization, money, migrations, concurrency, shared protocols, destructive operations, or difficult-to-reverse architecture. Use one independent reviewer; add a second only for a distinct unresolved invariant.
 - Give reviewers the intent, pinned diff, applicable rules, and verification evidence. Do not give them the author's defense of the implementation.
 - If independent review is unavailable, perform the structured review anyway and disclose that it was self-review.
+- Never spawn a subagent merely because a gate exists. Escalate a trivial or low task only when direct inspection discovers behavior risk, ambiguity, or a wider blast radius; state the evidence that changed the classification.
 
 ## Hunk Feedback
 
@@ -83,14 +88,16 @@ When the user says they left feedback in a live Hunk session:
 
 Proceed through reversible local investigation and edits without asking for routine approval. Ask when the answer changes product behavior, crosses an irreversible or shared-state boundary, needs unavailable credentials, or cannot be established from authoritative evidence.
 
-Do not commit, push, open or update pull requests, edit tickets, message teammates, deploy, migrate shared data, or change shared infrastructure unless the user requests that action.
+In a Jujutsu repository, an implementation request authorizes local `jj describe` and `jj new` checkpoints needed to keep completed units in separate reviewable changes. Follow `/jujutsu` and `/matt-pr`, preserve unrelated work, and never rewrite a pushed change silently. This does not authorize bookmarks, pushes, pull requests, or other remote actions.
+
+Outside that JJ checkpoint exception, do not commit. Never push, create or move remote bookmarks, open or update pull requests, edit tickets, message teammates, deploy, migrate shared data, or change shared infrastructure unless the user requests that action.
 
 ## Finish
 
 Report:
 
 - What changed and why.
-- The independent review verdict and any dismissed findings that matter.
+- The review level used—inline or independent—its verdict, and any dismissed findings that matter.
 - Fresh verification evidence, including the real surface exercised.
 - Anything incomplete, inconclusive, or intentionally skipped.
 - `Ready for teammate PR review: yes | no | inconclusive`, with the reason.

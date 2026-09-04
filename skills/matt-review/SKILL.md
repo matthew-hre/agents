@@ -1,6 +1,6 @@
 ---
 name: matt-review
-description: "Reviews a code diff independently for intent, logic, repository fit, names, comments, tests, and unnecessary complexity. Use before completion in Matt Mode or when asked to review a change or pull request."
+description: "Reviews a meaningful code diff independently for intent, logic, repository fit, names, comments, tests, and unnecessary complexity. Use for normal/high-risk Matt Mode changes or when asked to review a change or pull request; do not invoke for trivial or low-effort edits unless explicitly requested."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
 ---
 
@@ -12,9 +12,11 @@ Review artifacts, not the author's confidence. Be read-only unless the user or M
 
 When called from an implementation session, delegate the formal review to a fresh read-only subagent when the environment supports it. Give that reviewer the package below, not the implementation conversation or the author's defense. The parent agent adjudicates findings and owns any fixes.
 
-For high-risk work, use a second independent reviewer focused on the highest-risk invariant. Do not multiply reviewers for routine changes.
+For high-risk work, add a second independent reviewer only when the first review leaves a distinct high-impact invariant unresolved. Focus that reviewer on the unresolved question; do not multiply reviewers merely because the risk label is high.
 
 If a fresh reviewer is unavailable, run the same procedure as self-review and label the result `not independent`; never imply separation that did not occur.
+
+Do not invoke this skill automatically for wording, typos, formatting, tightly scoped semantic-preserving renames, or localized mechanical changes. Those receive direct diff inspection and targeted verification in the parent context. If the user explicitly requests `/matt-review` for such a change, review it inline without spawning a subagent unless direct inspection reveals meaningful risk.
 
 ## Establish Review Package
 

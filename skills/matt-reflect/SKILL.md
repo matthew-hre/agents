@@ -28,6 +28,7 @@ Do not reflect after every trivial task.
 1. Identify the concrete moment, expected behavior, actual behavior, and impact.
 2. Decide whether the issue was:
    - A skill failed to trigger or the router chose the wrong playbook.
+   - Workflow overhead, subagents, or verification exceeded the task's demonstrated effort or risk.
    - Instructions were absent, ambiguous, contradictory, or too buried.
    - Review failed to catch a quality problem.
    - Verification proved the wrong claim or wrong surface.

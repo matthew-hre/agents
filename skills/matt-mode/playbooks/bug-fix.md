@@ -6,7 +6,7 @@
 4. Trace the failing path and generate falsifiable hypotheses. Change one meaningful variable at a time.
 5. Add or improve a regression check at the public behavior boundary when practical.
 6. Fix the root cause at its owning layer. Remove code made dead or redundant by that fix without adding unrelated cleanup.
-7. Run diff hygiene, `/matt-verify`, and `/matt-review`.
+7. Run diff hygiene and `/matt-verify`, then apply Matt Mode's proportional review policy.
 8. Re-run the original, unminimized reproduction after review fixes.
 
 Do not call a plausible explanation the root cause until it predicts and resolves the observed failure.

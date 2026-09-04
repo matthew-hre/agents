@@ -57,28 +57,36 @@ Identify:
 
 For a bug, define a deterministic reproduction before accepting a causal theory.
 
-## 5. Classify Risk
+## 5. Classify Effort and Risk
 
-- `low`: local, mechanical, no behavior or boundary change.
-- `normal`: contained behavior change with established patterns.
-- `high`: authorization, security, money, migrations, destructive data, concurrency, shared contracts, public APIs, infrastructure, or broad ownership changes.
+- Effort `trivial`: wording, typo, formatting, or tightly scoped semantic-preserving rename.
+- Effort `low`: localized mechanical code change following an established pattern.
+- Effort `normal`: meaningful behavior, multiple coupled files, new logic, or a new local seam.
+- Risk `high`: authorization, security, money, migrations, destructive data, concurrency, shared contracts, public APIs, infrastructure, or difficult-to-reverse architecture.
 
-Risk controls review depth and verification breadth; file count alone does not.
+Effort controls workflow overhead. Risk can override effort and controls review depth and verification breadth. File count alone decides neither.
+
+Do not use a subagent for trivial or low-effort work. Escalate only when direct evidence reveals behavior risk, ambiguity, or wider blast radius.
 
 ## 6. Define Proof
 
 Map each acceptance claim to evidence. Include the real surface when behavior changes: live API request, browser flow, CLI invocation, migration/query, generated artifact, or equivalent.
+
+## 7. Plan Reviewable Changes
+
+When the work contains more than one coherent unit, follow `/matt-pr` before implementation and include an ordered local change stack. Each unit needs one responsibility, its dependency, an observable result, and focused proof. Do not defer decomposition until the final diff is already large.
 
 ## Output
 
 Keep the receipt short:
 
 ```text
-Mode / route / risk:
+Mode / route / effort / risk:
 Outcome and non-goals:
 Effective policy:
 Ownership and affected boundaries:
 Plan:
+Local change stack, when needed:
 Proof:
 Open product decisions:
 ```
