@@ -46,7 +46,7 @@ Do not run irrelevant expensive checks for ceremony. Keep skipped levels visible
 Exercise the surface the user or another system consumes whenever practical:
 
 - API: route, middleware, auth, serialization, and representative request/response.
-- UI: running browser flow and visible state, not only component tests.
+- UI: running browser flow and visible state, not only component tests. Use `/agent-browser` for the browser exercise and evidence capture unless another browser tool is clearly better for the specific surface.
 - CLI: actual invocation, output, exit code, and side effects.
 - Database: migration or query against the intended local/test database and read back resulting state.
 - Generated output: generate, parse or consume, and compare meaningful invariants.

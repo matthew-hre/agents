@@ -125,7 +125,7 @@ The test plan is a behavioral checklist, not a command transcript. Write concret
 
 Choose evidence that exposes the changed surface:
 
-- UI: exercise representative flows and states in a browser; attach inspected screenshots or a short recording.
+- UI: exercise representative flows and states in a browser; attach inspected screenshots or a short recording. Prefer `/agent-browser` to gather this evidence and keep command details in that skill's live workflow.
 - API or CLI: include a sanitized representative invocation and the response or output that proves the claim.
 - Database or infrastructure: include relevant migration/schema/plan output or a compact table/data-flow diagram, plus compatibility evidence for intermediate rollout states.
 - Nonvisual internal logic: cite the focused behavioral test or runtime exercise; do not manufacture a screenshot merely to decorate the PR.
