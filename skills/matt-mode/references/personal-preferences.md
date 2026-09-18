@@ -46,6 +46,15 @@ Blank lines are a readability tool for human scanning. Prefer visual separation 
 - Prefer direct control flow over hidden fallbacks, catch-all branches, and abstraction layers that only forward calls.
 - Fix ownership and root causes rather than adding one-off wrappers or patches around the wrong layer.
 
+## Prefer Available Libraries
+
+When a dependency already in the repository (or clearly standard for the stack) can reduce cognitive load, shrink the change, or replace awkward hand-rolled logic, use it. Do not re-implement what the library already names clearly.
+
+- Typical helpers in this stack: lodash (`uniq`, `sortBy`, `groupBy`, `compact`, `omit`, …), date-fns, and other packages already listed in the repo's dependencies.
+- Prefer the library call when it makes the intent obvious in fewer lines, or when the hand-rolled version would hide edge cases (dedupe, sort stability, date math, deep equality, safe omit).
+- Do not add a new dependency for a trivial one-liner. Do not use a library when a language primitive or existing local helper is clearer and already owns the concern.
+- Respect repository forbid-import, bundle, and isolation rules. Prefer deep imports that match neighboring code (for example `lodash/uniq.js`).
+
 ## Comments
 
 Default: no comments. When unsure, delete. Do not shorten a restating comment to keep it.
@@ -98,3 +107,4 @@ If a comment exists to explain surprising behavior in code we own, do not keep t
 - Mock external boundaries, not the unit's own decisions.
 - A test should be capable of failing for the defect or behavior it claims to cover.
 - Static checks, unit tests, builds, and runtime exercise prove different claims. Report them separately.
+- Do not unit-test LLM prompt wording by asserting the prompt string contains the instruction text you just wrote (`toContain('Do not report…')`). Those tests cannot fail for the real defect. Prefer: (1) behavior of prompt builders when they transform inputs into structured context (for example trim/dedupe of borrower names), and (2) evals or other model-facing checks for extraction outcomes.

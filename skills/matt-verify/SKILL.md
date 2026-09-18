@@ -39,6 +39,13 @@ Read repository scripts and CI, then run the relevant subset in increasing bread
 6. Build or generated-artifact validation.
 7. Real-surface exercise.
 
+In a Jujutsu repository, before claiming a stack tip is ready for push or a
+pull request, run `jj fix` on the reviewable revset (typically `trunk()..@` or
+the bookmark tip). That formats each revision separately so CI does not fail
+on ancestors that `pnpm format` only fixed in the working copy. Re-check lint
+or format after `jj fix` when it rewrites commits. Skip `jj fix` for
+read-only investigate or review-only work.
+
 Do not run irrelevant expensive checks for ceremony. Keep skipped levels visible with a reason.
 
 ## Real-Surface Proof
@@ -50,6 +57,7 @@ Exercise the surface the user or another system consumes whenever practical:
 - CLI: actual invocation, output, exit code, and side effects.
 - Database: migration or query against the intended local/test database and read back resulting state.
 - Generated output: generate, parse or consume, and compare meaningful invariants.
+- LLM prompt or extraction changes: an eval (or equivalent live model run) on a representative document. Substring asserts against the prompt text are not real-surface proof of model behavior.
 
 If the correct surface cannot be exercised, report verification as inconclusive rather than substituting a convenient lower-level check.
 

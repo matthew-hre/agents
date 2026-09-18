@@ -15,6 +15,7 @@ Design for the reviewer before the diff becomes large. A stack is a sequence of 
 3. Use JJ change IDs for stable local identity and bookmarks for GitHub branch identity.
 4. Local `jj describe` and `jj new` checkpoints are part of an authorized Matt Mode implementation. Creating or moving bookmarks, pushing, opening/updating PRs, and rewriting public changes require explicit user approval.
 5. Preserve unrelated work. Never force a clean tree or fold another person's changes into the stack.
+6. Never post, reply, resolve, or react on human-authored PR or issue review threads as the user unless they explicitly ask. Fetching and triaging those comments is fine; report disposition and optional draft reply text in chat only. Matt Mode Autonomy is the standing rule; the CodeRabbit babysitter inherits the same ban for human authors.
 
 ## Design the Change Stack Before Coding
 
@@ -75,6 +76,10 @@ If work has already accumulated in one large change:
 ## Publish a Draft Pull Request
 
 Create every pull request as a draft unless the user explicitly asks to request teammate review now. For a single PR, use `gh pr create --draft` with an agent-authored title and `--body-file`; do not rely on generated commit summaries. For a stack, preserve the draft default for every layer.
+
+In a Jujutsu repository, do not push or open the draft until `jj fix` has been
+run on the stack tip (see `/matt-verify` and `/jujutsu`). Working-copy-only
+`pnpm format` / `pnpm lint` is not enough when CI checks every commit.
 
 Write for a reviewer deciding whether the change is necessary and correct, not for the implementer remembering which files changed:
 

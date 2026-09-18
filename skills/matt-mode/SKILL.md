@@ -51,6 +51,7 @@ Matt Mode orchestrates applicable specialist skills; it does not absorb or repla
 - For Purelend work, include relevant team-wide skills from the installed Purelend plugin. When its source checkout exists at `~/Repos/agents`, treat `skills/skill-placement/SKILL.md` as the authority for deciding whether reusable guidance belongs in the shared plugin, one repository, deterministic enforcement, personal incubation, or nowhere shared.
 - Follow specialist constraints inside the selected playbook. A read-only or approval-gated specialist remains read-only or approval-gated.
 - Prefer amending an applicable existing skill over creating an overlapping one.
+- Use `/whiteboard` after customer-facing implementation when the user wants a high-level defense briefing (how it works, why X not Y, failure and trust edges) plus a visual artifact before opening a PR. Skip for PoCs and demos unless asked.
 
 ## Required Gates
 
@@ -93,6 +94,8 @@ In a Jujutsu repository, an implementation request authorizes local `jj describe
 
 Outside that JJ checkpoint exception, do not commit. Never push, create or move remote bookmarks, open or update pull requests, edit tickets, message teammates, deploy, migrate shared data, or change shared infrastructure unless the user requests that action.
 
+Never post, reply, resolve, or react on a human-authored pull request or issue review thread as the user (including via `gh` as their GitHub identity) unless they explicitly ask you to reply. Fetching and triaging those comments is fine; report findings and optional draft reply text in chat only. Bot-authored threads (for example CodeRabbit) follow `/verify-findings` or `/matt-pr` babysit rules and still do not authorize speaking as the user on human threads.
+
 ## Finish
 
 Report:
@@ -104,5 +107,7 @@ Report:
 - `Ready for teammate PR review: yes | no | inconclusive`, with the reason.
 
 Do not say "done," "fixed," "working," or "passes" more broadly than the evidence proves.
+
+For customer-facing work, offer `/whiteboard` before a PR when the user has not already run it and the change is non-trivial. Do not run it unsolicited.
 
 Use `/matt-reflect` after explicit user correction, repeated steering, a failed quality gate, or when the user asks to improve the workflow. Reflection never edits persistent skills without approval.

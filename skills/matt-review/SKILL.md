@@ -51,6 +51,7 @@ Do not report speculative logic bugs without a plausible input and path to the f
 - **Control flow:** flag hidden fallbacks, broad catches, impossible-state guards, repeated conditionals, and branches that obscure the invariant.
 - **Types:** flag `any`, unjustified casts, duplicated runtime/static shapes, missing exhaustiveness, and primitive values standing in for meaningful domain states.
 - **Structure:** flag pass-through wrappers, speculative abstractions, mixed responsibilities, misplaced logic, shotgun changes, and duplicate sources of truth. Flag dense declaration clusters (sibling overloads, jammed top-level types) that lack blank-line separation when personal preferences require visual chunking.
+- **Libraries:** when personal preferences apply, flag hand-rolled logic that an already-available dependency would express more clearly with less code (lodash, date-fns, and similar). Do not demand new dependencies for trivial cases, and do not fight repository forbid-import or isolation rules.
 - **Scope:** flag unrelated cleanup and compatibility code with no demonstrated consumer.
 - **Tests:** flag white-box assertions, excessive mocking, missing negative cases, and tests that merely repeat implementation.
 - **Policy:** verify applicable repository rules directly rather than relying on memory.

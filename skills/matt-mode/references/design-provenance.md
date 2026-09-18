@@ -11,6 +11,8 @@ The stack deliberately adapts these public practices:
 - Obra's Superpowers `verification-before-completion`, `requesting-code-review`, and `writing-skills`: fresh evidence before completion claims, implementer reports treated as untrusted, and RED-GREEN-REFACTOR pressure testing for skill changes.
   - https://github.com/obra/superpowers
 
+- Personal `/whiteboard`: Hashimoto-style high-level defense briefing before shipping customer-facing work; visual "show me" deliverable adapted from P-Stack `teach` / `show-me-your-work`, `break`, and Matt Pocock architecture HTML reports.
+
 Avoid importing these practices wholesale:
 
 - Mandatory heavy workflows for trivial tasks.

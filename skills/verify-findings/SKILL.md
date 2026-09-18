@@ -104,6 +104,7 @@ Verified N findings against PR diff + ticket: F fixed, S skipped, A asked.
 
 Reasons must be specific (`not in diff — present on main`, `out of scope for ENG-123`, `false positive — X already guards this`, `non-idiomatic — repo uses Y`). Avoid vague "not needed."
 
+For **human-authored** review comments: never post replies or resolve threads as the user unless they explicitly ask. Report disposition and optional draft reply text in chat only. See Matt Mode Autonomy.
 ## Anti-patterns
 
 - Running the bot's remediation prompt as a script.

@@ -131,6 +131,16 @@ jj prev -e
 jj next -e
 ```
 
+### Parking After a Finished Unit
+
+When a feature bookmark tip is complete and you need a clean working copy above the stack, create an undescribed empty child:
+
+```bash
+jj new
+```
+
+Do **not** describe empty parking commits (no `jj new -m "(empty) after …"` / `jj desc` on them). Those messages clutter `jj log` and are not part of the reviewable stack. Leave `(no description set)` until you start the next real unit and run `jj desc -m "…"`.
+
 ## Refining Commits
 
 ### Squashing Changes
@@ -300,7 +310,10 @@ jj git push -b main
 **Before pushing, ensure:**
 1. Your bookmark points to the correct commit (bookmarks don't auto-advance like git branches)
 2. The commits are refined and atomic
-3. The user has explicitly requested the push
+3. You ran `jj fix` on the stack being published (for example `jj fix -s 'trunk()..@'`
+   or the bookmark tip). This applies configured formatters/linters per revision so
+   each commit in the stack is clean, not only the working copy.
+4. The user has explicitly requested the push
 
 **IMPORTANT**: Unlike git branches, jj bookmarks do not automatically move when you create new commits. You must manually update them before pushing:
 
