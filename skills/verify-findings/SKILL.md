@@ -47,9 +47,7 @@ This skill is the **judgment layer**. For fetching unresolved CodeRabbit threads
 
 ### 1. Gather real context (do this before accepting any finding)
 
-**Jujutsu repos first.** If `.jj/` exists, read the `jujutsu` skill before any VCS command. Use `jj` for diff and history — not raw `git` (can corrupt colocated state). `git status` showing `HEAD (no branch)` / detached HEAD is **normal** in colocated jj repos; it is not missing branch context. For local change scope, prefer `jj diff --git` and `jj log -r 'trunk()..@'`. For an open PR, `gh pr diff` still works when a bookmark/branch is pushed.
-
-1. Identify the **change diff** (preferred: `gh pr diff`; locally: `jj diff --git` or `jj log -p -r 'trunk()..@'` in jj repos; otherwise branch diff vs merge base). If findings are pasted without a PR, diff against the branch merge base or working-copy parent (`@-` in jj).
+1. Identify the **change diff** (preferred: `gh pr diff`; locally: branch diff vs merge base). If findings are pasted without a PR, diff against the branch merge base.
 2. Identify the **ticket** (Linear/GitHub issue from PR body, bookmark/branch name, commit description, or user). Read its requirements and out-of-scope notes.
 3. Skim relevant **project rules / AGENTS.md** and one or two **neighboring implementations** for idioms.
 4. Build a short mental frame: *what this change is supposed to do*, and *what it deliberately does not*.
@@ -113,5 +111,3 @@ For **human-authored** review comments: never post replies or resolve threads as
 - Expanding scope because the bot "also noticed" something nearby.
 - Quietly applying **Skip** items to reduce comment count.
 - Re-reviewing the whole PR from scratch unless asked — stay on the finding list.
-- Interpreting detached `git HEAD` in a jj repo as "no branch" / blocked triage — use `jj st` and `jj log` instead.
-- Running `git diff`, `git checkout`, or other raw git mutations in a colocated jj repo without reading the `jujutsu` skill.

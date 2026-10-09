@@ -37,7 +37,7 @@ Prefer searching by symbol and path over trusting file names or comments.
 
 Why it was shaped this way:
 
-- Recent blame / history for the artifact (jj or git — use jj when `.jj/` exists).
+- Recent blame / history for the artifact (`git blame`, `git log`).
 - Nearby ADR, ticket, PR description, or comment that explains a non-obvious constraint.
 - Boundaries it enforces (auth, tenancy, sync vs async, client/server).
 

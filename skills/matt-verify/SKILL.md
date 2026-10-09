@@ -39,13 +39,6 @@ Read repository scripts and CI, then run the relevant subset in increasing bread
 6. Build or generated-artifact validation.
 7. Real-surface exercise.
 
-In a Jujutsu repository, before claiming a stack tip is ready for push or a
-pull request, run `jj fix` on the reviewable revset (typically `trunk()..@` or
-the bookmark tip). That formats each revision separately so CI does not fail
-on ancestors that `pnpm format` only fixed in the working copy. Re-check lint
-or format after `jj fix` when it rewrites commits. Skip `jj fix` for
-read-only investigate or review-only work.
-
 Do not run irrelevant expensive checks for ceremony. Keep skipped levels visible with a reason.
 
 ## Real-Surface Proof

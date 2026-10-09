@@ -45,7 +45,7 @@ If the task does not fit, construct the smallest workflow that preserves the gat
 
 Matt Mode orchestrates applicable specialist skills; it does not absorb or replace them.
 
-- Use an installed specialist skill when its trigger matches more precisely than a generic playbook. Examples include `codebase-design`, `codebase-archaeology`, `verify-findings`, `jujutsu`, `interface-review`, `hunk-review`, and framework-specific skills.
+- Use an installed specialist skill when its trigger matches more precisely than a generic playbook. Examples include `codebase-design`, `codebase-archaeology`, `verify-findings`, `interface-review`, `hunk-review`, and framework-specific skills.
 - When real browser interaction or UI verification is needed, use `/agent-browser` instead of improvised browser tooling. Let that skill load its own version-matched command guidance instead of copying CLI details into Matt Mode.
 - Use `/codebase-design` when introducing or moving a seam, splitting a mixed file, deepening a shallow module cluster, or choosing where an interface should live. Prefer its vocabulary (`module`, `interface`, `seam`, `adapter`, `depth`, `leverage`, `locality`) and run Design It Twice when the seam placement is contested or expensive to reverse. Do not run it as ceremony on routine feature work that follows an established pattern.
 - For Purelend work, include relevant team-wide skills from the installed Purelend plugin. When its source checkout exists at `~/Repos/agents`, treat `skills/skill-placement/SKILL.md` as the authority for deciding whether reusable guidance belongs in the shared plugin, one repository, deterministic enforcement, personal incubation, or nowhere shared.
@@ -89,8 +89,6 @@ When the user says they left feedback in a live Hunk session:
 ## Autonomy
 
 Proceed through reversible local investigation and edits without asking for routine approval. Ask when the answer changes product behavior, crosses an irreversible or shared-state boundary, needs unavailable credentials, or cannot be established from authoritative evidence.
-
-In a Jujutsu repository, an implementation request authorizes local `jj describe` and `jj new` checkpoints needed to keep completed units in separate reviewable changes. Follow `/jujutsu` and `/matt-pr`, preserve unrelated work, and never rewrite a pushed change silently. This does not authorize bookmarks, pushes, pull requests, or other remote actions.
 
 Outside that JJ checkpoint exception, do not commit. Never push, create or move remote bookmarks, open or update pull requests, edit tickets, message teammates, deploy, migrate shared data, or change shared infrastructure unless the user requests that action.
 
