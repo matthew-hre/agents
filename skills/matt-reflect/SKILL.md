@@ -1,97 +1,42 @@
 ---
 name: matt-reflect
-description: "Turns repeated steering, user corrections, and failed quality gates into proposed workflow improvements. Use after a correction, recurring failure, substantial task, or explicit request to improve Matt Mode."
+description: "Proposes improvements to code guidance, skills, tooling, and environments from demonstrated friction. Use when explicitly asked to reflect or improve the workflow; offer concrete remedies during or after costly execution friction without automatically running a retrospective."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
 ---
 
 # Matt Reflect
 
-Extract durable workflow improvements without turning one unusual task into permanent policy.
+Learn from friction experienced by both the user and the agent, not every imperfection an agent notices. Adapt to corrections immediately; persistent guidance is a separate decision. Suggest concrete improvements during or after costly execution friction, and run a full reflection when asked.
 
-## Scope
+Use the current conversation and its artifacts, plus other sessions the user asks you to inspect. Use `/hunk-review` for identified live Hunk feedback. Distinguish user-authored preferences from agent suggestions and one-off fixes.
 
-Use the current workspace conversation and its artifacts. Do not mine unrelated repositories, sessions, or personal data.
+Find the concrete mismatch between expected and actual behavior. Check whether an existing instruction was ignored before proposing another one. Seek contradictory examples; one repeated problem, high-impact failure, or explicitly stated standing preference can justify a durable change.
 
-When the user identifies a live Hunk review as evidence, follow `/hunk-review` to read user-authored comments from that session. Do not generalize agent-authored comments or silently treat every inline suggestion as a standing preference.
+## Improve the Working Conditions Too
 
-Trigger on:
+Look beyond code corrections: repeated shell workarounds, brittle scripts, missing dependencies, unreliable startup, unavailable test data, access problems, and awkward browser or service verification can reveal a better way to work.
 
-- Explicit user reflection request.
-- User correction or repeated manual steering.
-- A review or verification failure that exposed a reusable gap.
-- A substantial successful task with a clearly reusable method.
+Distinguish a broken environment from missing knowledge or a missing reusable capability. Prefer fixing the setup or using an existing tool/skill over documenting a workaround. Amend an existing skill when it owns the workflow; propose a new skill when a distinct, reusable procedure is being rediscovered. Retain a script only when deterministic automation has an ongoing use.
 
-Do not reflect after every trivial task.
+At session end, or while a blocker is consuming time, name the observed cost and the smallest improvement that would remove it. For example: “I repeatedly rebuilt test data by hand; a repository verification skill with a fixture command would make this flow repeatable.” Do not offer generic reflection or invent an improvement when the session was smooth.
 
-## Analyze the Failure or Success
+## Prefer Elimination Over More Instructions
 
-1. Identify the concrete moment, expected behavior, actual behavior, and impact.
-2. Decide whether the issue was:
-   - A skill failed to trigger or the router chose the wrong playbook.
-   - Workflow overhead, subagents, or verification exceeded the task's demonstrated effort or risk.
-   - Instructions were absent, ambiguous, contradictory, or too buried.
-   - Review failed to catch a quality problem.
-   - Verification proved the wrong claim or wrong surface.
-   - Repository context was unavailable or not inspected.
-   - Architecture, API shape, data structures, or types allowed an avoidable invalid state or operation.
-   - Compilation, lint, tests, scripts, runtime checks, or CI should enforce it.
-   - A one-off preference that should not persist.
-3. Seek contradictory examples before generalizing.
+Evaluate remedies in the user's order:
 
-## Durability Filter
+1. Make the issue impossible through ownership, architecture, API shape, data structures, or types.
+2. Enforce it mechanically through compiler, lint, tests, scripts, validation, or CI.
+3. Amend existing guidance at the right scope.
+4. Use manual review as a backstop.
 
-Recommend persistence only when the lesson is likely to remain useful for at least six months and is specific enough to change a future decision. Prefer repeated evidence; allow one high-impact failure or one explicitly stated standing preference when the invariant is clear.
+Stop at the earliest adequate remedy. Do not build infrastructure for a one-off issue, or add prose that repeats existing policy.
 
-For every accepted candidate, evaluate remedies in this order and stop at the earliest level that adequately controls the problem:
+For guidance placement, consult the shared `skill-placement` skill when available. Purelend-wide guidance belongs in the shared plugin at `~/Repos/agents/skills/`; local contracts belong in the repository; personal or experimental preferences belong in the personal skills. Personal incubation may precede team adoption, but remove duplication when shared guidance becomes canonical.
 
-1. **Impossible by construction:** improve ownership, architecture, API shape, data structure, state model, or types.
-2. **Mechanical enforcement:** compiler, formatter, lint, test, deterministic script, runtime validation, or CI.
-3. **Guidance and placement:** amend an existing skill or rule at the narrowest scope that reaches every intended consumer.
-4. **Manual review:** add a review check only when earlier levels cannot adequately encode the judgment.
+## Propose Less
 
-For level 3, consult the shared `skill-placement` skill when available:
+Return only the few changes that would have mattered: the observed friction, evidence, proposed remedy and placement, and a scenario that could disprove its usefulness. Say when no persistent change is warranted. No accept/reject/backlog ledger or mandatory proposal template.
 
-- Stable guidance useful in multiple Purelend repositories belongs in the shared plugin at `~/Repos/agents/skills/`. That plugin accepts skills, not shared rules or `.mdc` files.
-- Repository architecture, stack, or workflow guidance belongs in that repository.
-- Personal, experimental, or temporary guidance belongs in `~/.agents/skills/matt-*`.
-- When a team-wide candidate is difficult to upstream, personal guidance may incubate it immediately. Mark the duplication and remove the personal copy if the shared version becomes canonical.
-- Prefer amending an existing skill over adding a near-duplicate. Add a new skill only for a distinct reusable workflow.
-- Drop guidance that is already enforced, already covered, too vague, contradictory, or one-off.
+Do not edit persistent skills, rules, preferences, or tooling without explicit approval. Personal-stack approval does not authorize changes to the shared team plugin.
 
-## Proposal
-
-Return at most a few items:
-
-```text
-Observation:
-Evidence:
-Elimination level:
-Placement:
-Proposed change:
-Why it is durable:
-How to pressure-test it:
-```
-
-Distinguish `accept`, `reject`, and `backlog` candidates. Prefer editing an existing skill over creating another.
-
-For a shared Purelend promotion candidate, also provide:
-
-```text
-Affected repositories or teams:
-Why design or CI cannot fully enforce it:
-Existing shared skill to amend, or why a new skill is warranted:
-Immediate personal incubation, if any:
-Evidence required before upstreaming:
-```
-
-## Approval and Pressure Test
-
-Do not modify persistent skills, personal preferences, repository rules, tooling, or `~/Repos/agents` during reflection without explicit approval. Approval to update the personal stack does not authorize changing, committing, pushing, or opening a pull request in the shared team plugin.
-
-For an approved skill change:
-
-1. Recreate or describe a compact scenario that previously produced the failure.
-2. Record the expected behavior.
-3. Make the smallest instruction or trigger change that addresses it.
-4. Re-evaluate the scenario and one nearby counterexample.
-5. Keep the change only if it fixes the failure without creating broader ceremony or conflict.
+For an approved edit, compare the prior failure scenario and a nearby counterexample against the revised instructions. Distinguish an instruction walkthrough from an executed agent trial. Keep the change only if it addresses the failure without introducing new ceremony or weakening needed safeguards.

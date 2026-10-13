@@ -1,6 +1,6 @@
 ---
 name: matt-pr
-description: "Structures substantial work into atomic local changes and focused single or stacked GitHub pull requests. Use during Matt Mode planning when work has multiple coherent units, or when asked to prepare, open, review, update, restack, or maintain a pull request."
+description: "Structures substantial work into atomic local changes and focused single or stacked GitHub pull requests. Use when implementation has multiple coherent units, or when asked to prepare, open, update, restack, or maintain a pull request—not for conversational PR review."
 compatibility: Cursor and Agent Skills-compatible coding agents with Jujutsu, GitHub CLI, filesystem, and shell access.
 ---
 

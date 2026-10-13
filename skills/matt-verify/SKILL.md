@@ -1,75 +1,28 @@
 ---
 name: matt-verify
-description: "Requires fresh evidence for completion claims and exercises the real changed surface. Use before saying code is fixed, working, complete, clean, or ready for review."
+description: "Gathers fresh evidence for changed behavior and diagnoses gaps in verification. Use when asked to verify work or when deciding how to prove a consequential change; ordinary Matt Mode edits still need proportionate checks without loading this skill."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
 ---
 
 # Matt Verify
 
-No completion claim without fresh evidence from the current state.
+Prove the claim being made, not whatever is easiest to test. Gather evidence without repairing failures unless implementation or fixes are authorized.
 
-## Verification Gate
+Read repository scripts, CI, and relevant tests. Choose the smallest set of checks that can distinguish correct behavior from a plausible wrong implementation. Run them against the current state, inspect the results, and rerun affected checks after fixes. No mandatory check ladder or skipped-level receipt.
 
-For each claim:
+Static checks, unit tests, builds, and runtime exercise prove different things. Neither green CI nor another agent's report establishes behavior it did not exercise. Compare evidence against the requested outcome, including compatibility and failure paths where relevant.
 
-1. Name the command, observation, or artifact that would prove it.
-2. Run or inspect it freshly after the relevant changes.
-3. Read the complete result needed to establish exit status, failures, and scope.
-4. Compare the evidence with the exact claim.
-5. Mark the claim `proven`, `failed`, or `inconclusive`.
+## Exercise the Consumed Surface
 
-Do not use one evidence type to imply another:
+- API: representative requests through routing, auth, and serialization.
+- UI: browser interactions and affected states using `/agent-browser`; inspect captured visuals when appearance changes.
+- CLI: actual invocation, output, exit status, and side effects.
+- Database: local/test migration or query with resulting state read back.
+- Generated output: generate and parse or consume it, checking meaningful invariants.
+- LLM prompts: a representative eval or model run. Prompt substring assertions do not prove extraction behavior.
 
-- Formatting does not prove lint or type safety.
-- Typechecking does not prove runtime behavior.
-- Unit tests do not prove build, integration, or requirement completeness.
-- A build does not prove the user-visible feature.
-- Green CI does not prove checks cover the changed requirement.
-- A subagent report does not prove its artifacts are correct.
+For bugs, reproduce before editing when possible and rerun the original case after the fix. A regression check must be capable of failing without the fix. Preserve unrelated work during comparisons.
 
-## Derive the Ladder
+Prefer existing tooling and disposable probes. Do not retain a one-off validation script merely because it produced evidence. Keep tests that protect consumer behavior, not private structure or incidental wording.
 
-Read repository scripts and CI, then run the relevant subset in increasing breadth:
-
-1. Formatter or changed-file diagnostics.
-2. Linter.
-3. Typecheck.
-4. Focused tests for changed behavior.
-5. Broader package or repository tests.
-6. Build or generated-artifact validation.
-7. Real-surface exercise.
-
-Do not run irrelevant expensive checks for ceremony. Keep skipped levels visible with a reason.
-
-## Real-Surface Proof
-
-Exercise the surface the user or another system consumes whenever practical:
-
-- API: route, middleware, auth, serialization, and representative request/response.
-- UI: running browser flow and visible state, not only component tests. Use `/agent-browser` for the browser exercise and evidence capture unless another browser tool is clearly better for the specific surface.
-- CLI: actual invocation, output, exit code, and side effects.
-- Database: migration or query against the intended local/test database and read back resulting state.
-- Generated output: generate, parse or consume, and compare meaningful invariants.
-- LLM prompt or extraction changes: an eval (or equivalent live model run) on a representative document. Substring asserts against the prompt text are not real-surface proof of model behavior.
-
-If the correct surface cannot be exercised, report verification as inconclusive rather than substituting a convenient lower-level check.
-
-## Bug Fixes
-
-- Re-run the original reproduction after the fix.
-- Preserve evidence that the reproduction was red before the fix when available.
-- A regression test should be capable of failing without the fix. Demonstrate this through prior failure or a safe temporary comparison when practical; never destroy unrelated work to manufacture proof.
-
-## Requirements Audit
-
-Check every acceptance criterion and named non-goal against current evidence. Passing tests do not prove an omitted criterion.
-
-## Receipt
-
-Report compactly:
-
-```text
-Claim | Evidence | Result
-```
-
-Include exact commands, exit status or meaningful counts, the real surface exercised, and anything skipped or inconclusive. Never hide failing checks behind a broad success summary.
+Report exact commands or interactions, observed results, and material limitations concisely. Use a table only when it helps. If the real surface could not run, say what the lower-level checks establish and leave the behavioral claim inconclusive. Never hide failed checks behind a broad success summary.

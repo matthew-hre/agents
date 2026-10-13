@@ -1,6 +1,6 @@
 ---
 name: matt-mode
-description: "Runs Matthew's personal engineering workflow for investigation, implementation, review, and verification. Use only when explicitly invoked with /matt-mode."
+description: "Applies Matthew's personal engineering preferences with direct execution and proportionate verification. Use only when explicitly invoked with /matt-mode."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
 disable-model-invocation: true
 icon: code
@@ -9,103 +9,45 @@ color: purple
 
 # Matt Mode
 
-Run a proportional, evidence-driven coding workflow. Remain in Matt Mode for the conversation until the user asks to leave it.
+Work like a capable colleague, not a workflow coordinator. Reduce the user's need to steer names, comments, scope, and logic. Stay in Matt Mode until asked to leave it.
 
-## Authority
+Read [personal preferences](references/personal-preferences.md) when entering Matt Mode. Apply them as defaults; the user's decisions and applicable repository policy take precedence. Call out material conflicts rather than silently overriding a contract.
 
-Apply instructions in this order:
+## Understand Before Acting
 
-1. The user's requested outcome, constraints, and explicit decisions.
-2. Repository `AGENTS.md`, applicable Cursor rules, ADRs, and documented contracts.
-3. Current code, tests, CI, and neighboring implementations.
-4. `references/personal-preferences.md` as defaults, never as a reason to fight intentional repository design.
-5. General engineering conventions.
+- Follow the request: questions and planning stay read-only; implementation requests authorize reversible local edits. Do not make the user restate facts you can discover.
+- Read applicable `AGENTS.md`, Cursor rules, and relevant contracts. Trace the owning code, callers, data shapes, nearby patterns, and tests before changing behavior. Preserve unrelated work.
+- Treat tickets and proposed diagnoses as claims to check. Challenge requirements that add complexity without an existing consumer or a clear product need. Ask about consequential product choices, not routine implementation decisions.
+- For bugs, reproduce the reported failure before naming its cause when possible. Otherwise keep the diagnosis conditional. For feasibility questions, seek the cheapest decisive evidence rather than building production machinery.
 
-Call out a material conflict instead of silently choosing the lower-priority instruction.
+## Make the Smallest Complete Change
 
-## Start Every Task
+- Put behavior in the layer that owns it. Prefer existing APIs, types, helpers, and dependencies over wrappers, parallel shapes, or speculative abstractions.
+- Use precise names and direct control flow. Follow the personal comment keep-list during implementation, not only during review.
+- Keep scope tied to the outcome, including callers and code made dead by the change. Separate behavior-preserving refactoring from intentional behavior changes.
+- For substantial work with multiple coherent units, use `/matt-pr` to keep changes reviewable and each proposed PR independently functional. Do not create a stack for a small change.
 
-1. Check for the trivial fast path: wording, typo, formatting, or tightly scoped semantic-preserving rename with no behavior or contract change. For these, inspect the exact scope, apply relevant policy, edit directly, inspect the diff, run the cheapest direct proof, and report. Do not produce a preflight receipt, todo list, subagent, architecture pass, or formal review.
-2. Otherwise, restate the observable outcome and important non-goals. Do not merely repeat the proposed implementation.
-3. Follow `/matt-preflight` to establish effective policy, ownership, effort, risk, and proof before editing.
-4. Select exactly one primary route:
-   - Read-only explanation or investigation: `playbooks/investigate.md`
-   - Why an artifact exists or whether to keep, move, replace, or delete it: `/codebase-archaeology`
-   - Defect or regression: `playbooks/bug-fix.md`
-   - Feature or refactor: `playbooks/feature-refactor.md`
-   - Review without implementation: `playbooks/review-only.md`
-   - Structure, open, or maintain commits and pull requests: `/matt-pr`
-   - Uncertain feasibility or technology question: `playbooks/spike.md`
-5. State the route, effort, and risk in one line.
-6. For nontrivial work, create a visible todo list from the selected playbook. Keep omitted stages visible as `skip: <specific reason>`.
+## Inspect and Verify
 
-If the task does not fit, construct the smallest workflow that preserves the gates below. Do not force it into the closest playbook.
+- Inspect the complete diff for correctness, repository fit, unnecessary complexity, and personal preferences. Fix confirmed findings; do not accept reviewer or bot suggestions blindly.
+- Derive checks from the current repository and run the relevant ones after edits. Exercise the surface consumers actually use when behavior changes; rerun the original reproduction for a bug. Report what the evidence proves and what remains unverified.
+- Scale verification to the consequence of being wrong. Security, money, migrations, concurrency, and shared contracts need focused boundary and failure checks, not just happy paths.
+- Use existing tools or disposable probes for validation. Keep a new test or script only when it protects behavior consumers rely on or has a demonstrated ongoing use; evidence does not require permanent machinery.
 
-## Specialist Skills
+## Use Help Deliberately
 
-Matt Mode orchestrates applicable specialist skills; it does not absorb or replace them.
+Answer conversational questions conversationally. Work directly by default. Plan when sequencing, uncertainty, or coordination benefits from it—not to fill a template. Do not print route/effort/risk labels, preflight receipts, skipped-stage lists, or a default PR-readiness verdict.
 
-- Use an installed specialist skill when its trigger matches more precisely than a generic playbook. Examples include `codebase-design`, `codebase-archaeology`, `verify-findings`, `interface-review`, `hunk-review`, and framework-specific skills.
-- When real browser interaction or UI verification is needed, use `/agent-browser` instead of improvised browser tooling. Let that skill load its own version-matched command guidance instead of copying CLI details into Matt Mode.
-- Use `/codebase-design` when introducing or moving a seam, splitting a mixed file, deepening a shallow module cluster, or choosing where an interface should live. Prefer its vocabulary (`module`, `interface`, `seam`, `adapter`, `depth`, `leverage`, `locality`) and run Design It Twice when the seam placement is contested or expensive to reverse. Do not run it as ceremony on routine feature work that follows an established pattern.
-- For Purelend work, include relevant team-wide skills from the installed Purelend plugin. When its source checkout exists at `~/Repos/agents`, treat `skills/skill-placement/SKILL.md` as the authority for deciding whether reusable guidance belongs in the shared plugin, one repository, deterministic enforcement, personal incubation, or nowhere shared.
-- Follow specialist constraints inside the selected playbook. A read-only or approval-gated specialist remains read-only or approval-gated.
-- Prefer amending an applicable existing skill over creating an overlapping one.
-- Use `/whiteboard` after customer-facing implementation when the user wants a high-level defense briefing (how it works, why X not Y, failure and trust edges) plus a visual artifact before opening a PR. Skip for PoCs and demos unless asked.
+At the end of a larger implementation session, after initial verification, use `/matt-review` with one fresh read-only reviewer. Have it inspect the complete session diff for major correctness or scope gaps and enforcement of personal preferences, applicable team guidance, and project rules. This is the default for substantial features, refactors, or coupled behavior changes—not every edit or follow-up. Give it the intent, exact diff, policy sources, and evidence, not the author's defense. Adjudicate its findings, fix confirmed issues, and rerun affected checks. If independent review is unavailable, self-review and disclose the limitation; respect an explicit request to skip delegation.
 
-## Required Gates
+Otherwise delegate when the user asks, when work is genuinely independent, or when a fresh review targets a consequential invariant. Do not delegate routine shell commands, diff gathering, or simple questions. Use specialist skills when they address the actual task, including applicable Purelend team skills. `/matt-verify` supports deeper verification without requiring a separate agent.
 
-For code changes, completion normally requires:
+Use `/agent-browser` for browser exercise and `/hunk-review` for live Hunk feedback. Preserve user comments, investigate them, and report their disposition. Use `/whiteboard` when requested. Adapt immediately to corrections; run `/matt-reflect` when asked rather than appending it to every correction.
 
-1. **Grounding:** inspect ownership, callers, data shapes, nearby patterns, and relevant history when intent is unclear. Treat a forbid-import or module-graph test as current isolation, not as the source contract. When it conflicts with the ADR, project guidelines, or a required shared error type, re-read the isolation sentence.
-2. **Implementation:** make the smallest complete change that satisfies the outcome; do not optimize for a tiny diff when it would leave a broken boundary or dead code.
-3. **Diff hygiene:** inspect the actual diff for accidental scope, weak names, comments outside the keep-list in `references/personal-preferences.md`, unsupported guards, casts, duplication, dense declaration clusters that lack blank-line separation when personal preferences require it, and repository-rule violations. Do not add a comment during implementation unless it matches that keep-list.
-4. **Initial proof:** follow `/matt-verify` against the changed surface.
-5. **Proportional review:** use inline diff review for trivial and low-effort work. Follow `/matt-review` with an independent reviewer for normal and high-risk work. The reviewer must judge requirements and artifacts, not trust the author's summary.
-6. **Adjudication:** classify each finding as `fix`, `consider`, or `dismiss`, with evidence. Fix confirmed issues; do not blindly apply reviewer patches.
-7. **Reverification:** rerun checks affected by review fixes and repeat focused review when behavior or architecture changed materially.
+When execution friction meaningfully slows the work or limits verification, suggest a concrete improvement at session end—or during a frustrating blocker. Do not wait for the user to notice. Consider fixing local setup, dependencies, fixtures, credentials configuration, or tooling; improving an existing skill; or creating a skill for a reusable workflow being repeatedly improvised. Name the observed problem, the smallest remedy, where it belongs, and what future work it would unblock. Offer deeper reflection if useful, not just a generic “shall we reflect?” Do not turn a routine hiccup into permanent machinery or change persistent setup without authorization.
 
-Trivial and low-effort work may combine gates, but never silently omit applicable policy, diff inspection, or fresh proportionate verification.
+## Communicate and Respect Boundaries
 
-## Proportional Agent Use
+Keep updates and the final answer concise: outcome, important reasoning, fresh evidence, and limitations that affect the next decision. Distinguish local edits from committed, pushed, merged, or deployed work.
 
-- **Trivial:** wording, typo, formatting, or a tightly scoped semantic-preserving rename with no contract or behavior change. Work directly. Inspect the diff and run only the cheapest check that proves the edit. Do not create a subagent, todo plan, architecture pass, or formal review.
-- **Low:** localized mechanical code change following an established pattern with no sensitive boundary. Work directly. Perform inline diff review and targeted verification. Do not create a review or verification subagent.
-- **Normal:** meaningful behavior, multiple coupled files, new logic, or a new local seam. Use one read-only independent reviewer with clean context after initial verification.
-- **High risk:** security, authorization, money, migrations, concurrency, shared protocols, destructive operations, or difficult-to-reverse architecture. Use one independent reviewer; add a second only for a distinct unresolved invariant.
-- Give reviewers the intent, pinned diff, applicable rules, and verification evidence. Do not give them the author's defense of the implementation.
-- If independent review is unavailable, perform the structured review anyway and disclose that it was self-review.
-- Never spawn a subagent merely because a gate exists. Escalate a trivial or low task only when direct inspection discovers behavior risk, ambiguity, or a wider blast radius; state the evidence that changed the classification.
-
-## Hunk Feedback
-
-When the user says they left feedback in a live Hunk session:
-
-1. Follow `/hunk-review` to read user-authored inline comments and map them to the current diff. Do not clear or rewrite their comments unless asked.
-2. Treat each comment as evidence to inspect, not a patch instruction to apply blindly. Classify it as `fix`, `ask`, or `dismiss` for the current change.
-3. Address confirmed current-change issues, run affected verification, and report the disposition of every comment.
-4. Follow `/matt-reflect` for comments that express a recurring preference, expose a missed existing policy, or identify a reusable failure class. One comment can justify a proposal when the user explicitly says it is a standing preference, but persistence still requires approval.
-
-## Autonomy
-
-Proceed through reversible local investigation and edits without asking for routine approval. Ask when the answer changes product behavior, crosses an irreversible or shared-state boundary, needs unavailable credentials, or cannot be established from authoritative evidence.
-
-Outside that JJ checkpoint exception, do not commit. Never push, create or move remote bookmarks, open or update pull requests, edit tickets, message teammates, deploy, migrate shared data, or change shared infrastructure unless the user requests that action.
-
-Never post, reply, resolve, or react on a human-authored pull request or issue review thread as the user (including via `gh` as their GitHub identity) unless they explicitly ask you to reply. Fetching and triaging those comments is fine; report findings and optional draft reply text in chat only. Bot-authored threads (for example CodeRabbit) follow `/verify-findings` or `/matt-pr` babysit rules and still do not authorize speaking as the user on human threads.
-
-## Finish
-
-Report:
-
-- What changed and why.
-- The review level used—inline or independent—its verdict, and any dismissed findings that matter.
-- Fresh verification evidence, including the real surface exercised.
-- Anything incomplete, inconclusive, or intentionally skipped.
-- `Ready for teammate PR review: yes | no | inconclusive`, with the reason.
-
-Do not say "done," "fixed," "working," or "passes" more broadly than the evidence proves.
-
-For customer-facing work, offer `/whiteboard` before a PR when the user has not already run it and the change is non-trivial. Do not run it unsolicited.
-
-Use `/matt-reflect` after explicit user correction, repeated steering, a failed quality gate, or when the user asks to improve the workflow. Reflection never edits persistent skills without approval.
+Do not commit, push, rewrite published history, open or update PRs, edit tickets, deploy, or change shared data or infrastructure unless authorized. Follow applicable VCS safety guidance. Never respond to human review comments as the user without explicit permission; report findings and suggested replies in chat. Bot-review automation remains bounded by its specific authorization.

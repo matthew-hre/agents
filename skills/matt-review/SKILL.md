@@ -1,86 +1,34 @@
 ---
 name: matt-review
-description: "Reviews a meaningful code diff independently for intent, logic, repository fit, names, comments, tests, and unnecessary complexity. Use for normal/high-risk Matt Mode changes or when asked to review a change or pull request; do not invoke for trivial or low-effort edits unless explicitly requested."
+description: "Reviews code for correctness and enforcement of personal, team, and project guidance. Use at the end of a larger Matt Mode implementation session, when asked to review a change or PR, or to check a consequential invariant; not for every small edit."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
 ---
 
 # Matt Review
 
-Review artifacts, not the author's confidence. Be read-only unless the user or Matt Mode explicitly moves accepted findings into a fix stage.
+Review artifacts, not the author's confidence. Stay read-only unless asked to fix findings. Match the requested scope: a casual question about a helper is not a request for a full PR audit.
 
-## Preserve Independence
+For the end-of-session review of substantial implementation, use one fresh read-only subagent after initial verification unless the user opts out. Review the complete session diff, not just the last fix. Give the reviewer the intent, exact diff, personal preferences, applicable team guidance, project policy sources, and verification evidence—not the author's defense. Have it read those sources directly rather than trust the implementer's summary of compliance.
 
-When called from an implementation session, delegate the formal review to a fresh read-only subagent when the environment supports it. Give that reviewer the package below, not the implementation conversation or the author's defense. The parent agent adjudicates findings and owns any fixes.
+For smaller edits and conversational review questions, work directly. Delegate when explicitly requested or when independence helps check a consequential invariant. Be honest about whether review was independent; if delegation is unavailable, self-review and disclose it. The parent owns adjudication, fixes, and reverification.
 
-For high-risk work, add a second independent reviewer only when the first review leaves a distinct high-impact invariant unresolved. Focus that reviewer on the unresolved question; do not multiply reviewers merely because the risk label is high.
+## Inspect the Change
 
-If a fresh reviewer is unavailable, run the same procedure as self-review and label the result `not independent`; never imply separation that did not occur.
+Establish the review target, intended behavior, applicable team and repository policy, and relevant tests. Read [personal preferences](../matt-mode/references/personal-preferences.md) for names, function signatures, comments, types, and architecture; repository contracts take precedence. Check applicable `AGENTS.md`, Cursor rules, and team skills directly.
 
-Do not invoke this skill automatically for wording, typos, formatting, tightly scoped semantic-preserving renames, or localized mechanical changes. Those receive direct diff inspection and targeted verification in the parent context. If the user explicitly requests `/matt-review` for such a change, review it inline without spawning a subagent unless direct inspection reveals meaningful risk.
+Check both intent and quality:
 
-## Establish Review Package
+- Does the change deliver the requested behavior without omitted requirements or scope creep? Challenge speculative requirements rather than demanding machinery for every ticket bullet.
+- Trace plausible success, boundary, failure, retry, stale-state, and concurrency paths where relevant. Check authorization and trust at the owning boundary, and agreement between types, schemas, persistence, and outputs.
+- Can the tests fail for the claimed defect? Do they cover consumer behavior rather than internal calls or incidental formatting?
+- Could existing code or a smaller interface replace the new abstraction? Flag weak names, narration comments, duplicated shapes, unjustified casts, impossible-state guards, and unnecessary dependencies.
 
-Pin:
+Verify suspected defects against concrete inputs and execution paths. Keep unverified concerns conditional; do not report pattern-matching suspicions as bugs.
 
-- Review target and merge base or file scope.
-- Original request, ticket, spec, and non-goals.
-- Applicable `AGENTS.md`, scoped rules, ADRs, and neighboring idioms.
-- Diff and changed tests.
-- Verification evidence gathered so far.
+## Report What Matters
 
-If operating as an independent reviewer, do not rely on the implementer's prose rationale. Treat it as an unverified claim.
+Lead with the answer to the user's question. For important findings, give severity, file/symbol, the violated contract, concrete impact, and a correction direction. Separate optional preferences from blockers.
 
-## Review on Two Separate Axes
+If there are no findings, say what you inspected and disclose material limitations. Do not invent a finding or print a verdict matrix to appear thorough. Give a PR-readiness assessment when requested, not by default.
 
-### Intent and Correctness
-
-- Does every acceptance criterion have an implementation path?
-- Is there scope creep or omitted behavior?
-- Trace concrete execution paths for success, empty input, boundaries, failures, retries, stale state, idempotency, and concurrency when relevant.
-- Are authorization and trust checks performed at the correct boundary?
-- Do contracts, runtime schemas, domain types, persistence, and output mappings agree?
-- Does the test fail for the behavior it claims to protect, or could it pass while the feature is broken?
-
-Do not report speculative logic bugs without a plausible input and path to the failure.
-
-### Quality and Repository Fit
-
-- **Names:** flag mysterious, generic, misleading, or abstraction-leaking names. Prefer precise domain terms.
-- **Function signatures:** flag ambiguous positional arguments: three or more parameters, multiple parameters sharing a type, and positional optional or boolean flags. Prefer a named-argument object unless distinct types and natural ordering make the call self-explanatory.
-- **Comments:** default to deletion. Keep only the keep-list in [`../matt-mode/references/personal-preferences.md`](../matt-mode/references/personal-preferences.md), or a stricter repository rule when one exists. Flag restating JSDoc, including a first sentence that paraphrases the symbol name. Flag comments that hide a surprise in owned code; the correction is a rename, type, or extract, not a shorter comment. When unsure whether a keep clause applies, flag the comment for deletion.
-- **Control flow:** flag hidden fallbacks, broad catches, impossible-state guards, repeated conditionals, and branches that obscure the invariant.
-- **Types:** flag `any`, unjustified casts, duplicated runtime/static shapes, missing exhaustiveness, and primitive values standing in for meaningful domain states.
-- **Structure:** flag pass-through wrappers, speculative abstractions, mixed responsibilities, misplaced logic, shotgun changes, and duplicate sources of truth. Flag dense declaration clusters (sibling overloads, jammed top-level types) that lack blank-line separation when personal preferences require visual chunking.
-- **Libraries:** when personal preferences apply, flag hand-rolled logic that an already-available dependency would express more clearly with less code (lodash, date-fns, and similar). Do not demand new dependencies for trivial cases, and do not fight repository forbid-import or isolation rules.
-- **Scope:** flag unrelated cleanup and compatibility code with no demonstrated consumer.
-- **Tests:** flag white-box assertions, excessive mocking, missing negative cases, and tests that merely repeat implementation.
-- **Policy:** verify applicable repository rules directly rather than relying on memory.
-
-## Findings Contract
-
-Every blocking or important finding must include:
-
-- Severity: `blocking`, `important`, or `minor`.
-- File and line or exact symbol.
-- Violated requirement, invariant, or repository convention.
-- Concrete impact or failure path.
-- Direction for correction, without requiring a particular patch shape when alternatives exist.
-
-Separate optional improvements from findings. Do not inflate style preference into correctness severity.
-
-For a recurring failure class, recommend remediation in this order: make it impossible through architecture, data structures, API shape, or types; enforce it through compiler, lint, tests, scripts, runtime checks, or CI; encode guidance at the appropriate shared, repository, or personal scope; rely on review only as a backstop. Do not demand new infrastructure for a one-off issue when the cost exceeds the demonstrated risk.
-
-## Verdict
-
-Report the two axes separately:
-
-```text
-Intent: pass | changes requested | inconclusive
-Quality: pass | changes requested | inconclusive
-Confidence: high | medium | low
-Ready for teammate PR review: yes | no | inconclusive
-```
-
-Then list findings in priority order. If none exist, say what was inspected and name the most important residual risk; do not invent a finding to appear thorough.
-
-After fixes, re-review the affected diff and nearby integration points rather than restarting an unfocused review of the whole repository.
+After fixes, recheck the affected diff and integration points rather than restarting an unfocused whole-repository review.
