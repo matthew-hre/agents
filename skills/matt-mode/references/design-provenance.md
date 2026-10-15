@@ -13,6 +13,10 @@ The stack deliberately adapts these public practices:
 
 The original router, preflight receipts, and five playbooks were removed after Cursor sessions showed conversational questions turning into formal workflows and routine tasks spawning unnecessary agents. Keep one independent reviewer at the end of substantial implementation to check personal, team, and project guidance and major correctness gaps. Small edits and questions stay direct; reflection is requested rather than automatic.
 
+The October 2026 consolidation uses Matthew's `codebase-standards.md`, `pr-standards.md`, `venn.md`, and `pre-pr-review-draft` as directional research, not universal policy or proof of preventable review volume. Matt Mode owns implementation quality and handoff; Matt Review owns review and verification; Matt PR owns publication and optional stacking; Matt Reflect remains opt-in. The retired preflight entry was removed and standalone verification became a reference.
+
+The Purelend expectations reference is personal incubation, pending any separately approved team adoption. Keep current team/repository policy authoritative. Do not restore hard diff-size gates, diff-only reviewers, blanket test-per-branch requirements, or automatic stop-hook review loops. These add ceremony or false assurance without establishing correctness.
+
 Avoid importing these practices wholesale:
 
 - Mandatory routes, receipts, and skipped-stage lists.

@@ -1,6 +1,6 @@
 ---
 name: matt-mode
-description: "Applies Matthew's personal engineering preferences with direct execution and proportionate verification. Use only when explicitly invoked with /matt-mode."
+description: "Applies Matthew's engineering preferences throughout implementation, checks the complete result for recurring review issues, and verifies claims before handoff. Use only when explicitly invoked with /matt-mode."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
 disable-model-invocation: true
 icon: code
@@ -11,7 +11,9 @@ color: purple
 
 Work like a capable colleague, not a workflow coordinator. Reduce the user's need to steer names, comments, scope, and logic. Stay in Matt Mode until asked to leave it.
 
-Read [personal preferences](references/personal-preferences.md) when entering Matt Mode. Apply them as defaults; the user's decisions and applicable repository policy take precedence. Call out material conflicts rather than silently overriding a contract.
+Read [personal preferences](references/personal-preferences.md) when entering Matt Mode. In Purelend repositories, also read [review expectations](references/purelend-review-expectations.md). Apply these while implementing, not just before a PR. The user's decisions and applicable repository policy take precedence; call out material conflicts rather than silently overriding a contract.
+
+The user should receive a scoped, understandable change with evidence for its behavior—not a first draft that needs them to catch narration comments, weak names, duplicated helpers, or obvious boundary failures. A confident summary is not evidence. Finish the work you can verify and make remaining uncertainty explicit.
 
 ## Understand Before Acting
 
@@ -23,16 +25,22 @@ Read [personal preferences](references/personal-preferences.md) when entering Ma
 ## Make the Smallest Complete Change
 
 - Put behavior in the layer that owns it. Prefer existing APIs, types, helpers, and dependencies over wrappers, parallel shapes, or speculative abstractions.
-- Use precise names and direct control flow. Follow the personal comment keep-list during implementation, not only during review.
+- Search the owning module and existing dependencies before adding a helper, schema, type, or component. Use the existing operation when it expresses the intent clearly; do not add a dependency for a trivial primitive.
+- Use precise domain names and direct control flow. Default to no comments; follow the personal comment keep-list rather than adding narration, section labels, TODOs, or restating JSDoc.
+- Validate untrusted input at its boundary, derive types from the source of truth, and trust established internal contracts. Fix the model rather than hiding a mismatch with a cast, fallback, or impossible-state guard.
 - Keep scope tied to the outcome, including callers and code made dead by the change. Separate behavior-preserving refactoring from intentional behavior changes.
 - For substantial work with multiple coherent units, use `/matt-pr` to keep changes reviewable and each proposed PR independently functional. Do not create a stack for a small change.
 
-## Inspect and Verify
+## Before Handoff
 
-- Inspect the complete diff for correctness, repository fit, unnecessary complexity, and personal preferences. Fix confirmed findings; do not accept reviewer or bot suggestions blindly.
+- Inspect the complete task diff, including new files and integration points, against the requested outcome and applicable guidance. For stacked work, distinguish this PR's delta from its ancestors. Do not review only the last edit or rely on lint to catch judgment errors.
+- Remove narration comments, weak or abbreviated names, duplicate helpers or shapes, unnecessary exports, speculative options, and unrelated changes you introduced. Preserve required comments and established public contracts; do not churn untouched legacy code.
+- Trace the changed success, boundary, and failure paths. Check that behavior is in the right layer and that the tests can distinguish a plausible wrong implementation. Fix confirmed findings; do not accept reviewer or bot suggestions blindly.
 - Derive checks from the current repository and run the relevant ones after edits. Exercise the surface consumers actually use when behavior changes; rerun the original reproduction for a bug. Report what the evidence proves and what remains unverified.
 - Scale verification to the consequence of being wrong. Security, money, migrations, concurrency, and shared contracts need focused boundary and failure checks, not just happy paths.
 - Use existing tools or disposable probes for validation. Keep a new test or script only when it protects behavior consumers rely on or has a demonstrated ongoing use; evidence does not require permanent machinery.
+
+Read [verification guidance](../matt-review/references/verification.md) when choosing evidence for a consequential change or when the relevant surface is difficult to exercise. A blocked check is a limitation to report, not permission to claim success or silently reduce coverage.
 
 ## Use Help Deliberately
 
@@ -40,7 +48,7 @@ Answer conversational questions conversationally. Work directly by default. Plan
 
 At the end of a larger implementation session, after initial verification, use `/matt-review` with one fresh read-only reviewer. Have it inspect the complete session diff for major correctness or scope gaps and enforcement of personal preferences, applicable team guidance, and project rules. This is the default for substantial features, refactors, or coupled behavior changes—not every edit or follow-up. Give it the intent, exact diff, policy sources, and evidence, not the author's defense. Adjudicate its findings, fix confirmed issues, and rerun affected checks. If independent review is unavailable, self-review and disclose the limitation; respect an explicit request to skip delegation.
 
-Otherwise delegate when the user asks, when work is genuinely independent, or when a fresh review targets a consequential invariant. Do not delegate routine shell commands, diff gathering, or simple questions. Use specialist skills when they address the actual task, including applicable Purelend team skills. `/matt-verify` supports deeper verification without requiring a separate agent.
+Otherwise delegate when the user asks, when work is genuinely independent, or when a fresh review targets a consequential invariant. Do not delegate routine shell commands, diff gathering, or simple questions. Use specialist skills when they address the actual task, including applicable Purelend team skills. Reviewers may read owning files, callers, and tests; do not restrict them to diff snippets.
 
 Use `/agent-browser` for browser exercise and `/hunk-review` for live Hunk feedback. Preserve user comments, investigate them, and report their disposition. Use `/whiteboard` when requested. Adapt immediately to corrections; run `/matt-reflect` when asked rather than appending it to every correction.
 
@@ -50,4 +58,6 @@ When execution friction meaningfully slows the work or limits verification, sugg
 
 Keep updates and the final answer concise: outcome, important reasoning, fresh evidence, and limitations that affect the next decision. Distinguish local edits from committed, pushed, merged, or deployed work.
 
-Do not commit, push, rewrite published history, open or update PRs, edit tickets, deploy, or change shared data or infrastructure unless authorized. Follow applicable VCS safety guidance. Never respond to human review comments as the user without explicit permission; report findings and suggested replies in chat. Bot-review automation remains bounded by its specific authorization.
+Use `jj` when a `.jj` file or directory exists, otherwise Git. Local checkpoints and refinement of your task's commits are part of implementation; run pre-commit checks manually with JJ. Once a PR is open, append fixes without rewriting its existing commits. Follow the full version-control policy in personal preferences.
+
+Do not push, open or update remote PRs, edit tickets, deploy, or change shared data or infrastructure unless authorized. Never respond to human review comments as the user without explicit permission; report findings and suggested replies in chat. Bot-review automation remains bounded by its specific authorization.

@@ -96,10 +96,12 @@ If a comment exists to explain surprising behavior in code we own, do not keep t
 - Do not rewrite neighboring prose into marketing-simple language or into a jargon pile.
 - A greenfield doc may set its own voice; do not force an existing section to change register for polish alone.
 
-## History After a Pull Request Exists
+## Version Control and Review History
 
-- Before a pull request is public: absorb and squash locally so the stack is one concern per commit.
-- After the pull request is public: put review fixes and follow-up work in new commits on top. Reviewers read those commits. Do not rewrite pushed commits with absorb, squash, or edit unless the user explicitly asks.
+- If a `.jj` file or directory exists, use `jj` for local version control; otherwise use Git. No separate JJ skill is required.
+- JJ does not run Git pre-commit hooks automatically. Inspect the repository's hooks and run their checks manually against the relevant changed files/tree. If they rely on staged files, run the underlying commands with explicit inputs rather than manipulating Git's index. Reinspect any resulting edits.
+- Before a pull request is open, local checkpoints and history refinement are welcome: rebase, squash, combine, split, or absorb your task's commits into a coherent final sequence. Preserve unrelated work and do not rewrite shared history merely because there is no PR.
+- Once a pull request is open, consider its existing commits immutable, including draft PRs and dependent stack branches. Append review fixes and follow-up work; do not squash, rebase, absorb into, edit, or force-rewrite existing PR history. Three review-fix commits are fine. Only an explicit user override changes this rule.
 
 ## Tests and Evidence
 

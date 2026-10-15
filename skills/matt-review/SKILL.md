@@ -1,6 +1,6 @@
 ---
 name: matt-review
-description: "Reviews code for correctness and enforcement of personal, team, and project guidance. Use at the end of a larger Matt Mode implementation session, when asked to review a change or PR, or to check a consequential invariant; not for every small edit."
+description: "Reviews changes for correctness and personal, team, and project standards, and verifies claims with fresh evidence when asked. Use for substantial Matt Mode handoffs, change/PR reviews, verification requests, or consequential invariants—not every small edit."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
 ---
 
@@ -14,7 +14,9 @@ For smaller edits and conversational review questions, work directly. Delegate w
 
 ## Inspect the Change
 
-Establish the review target, intended behavior, applicable team and repository policy, and relevant tests. Read [personal preferences](../matt-mode/references/personal-preferences.md) for names, function signatures, comments, types, and architecture; repository contracts take precedence. Check applicable `AGENTS.md`, Cursor rules, and team skills directly.
+Establish the review target, intended behavior, applicable team and repository policy, and relevant tests. Include new files and the complete task diff; for a stack, distinguish each PR's delta from its ancestors. Read owning files, callers, and tests where needed rather than restricting review to snippets.
+
+Read [personal preferences](../matt-mode/references/personal-preferences.md) for names, function signatures, comments, types, and architecture. In Purelend repositories, also read [review expectations](../matt-mode/references/purelend-review-expectations.md). Repository contracts take precedence. Check applicable `AGENTS.md`, Cursor rules, and team skills directly; legacy style is not permission to ignore current policy.
 
 Check both intent and quality:
 
@@ -24,6 +26,10 @@ Check both intent and quality:
 - Could existing code or a smaller interface replace the new abstraction? Flag weak names, narration comments, duplicated shapes, unjustified casts, impossible-state guards, and unnecessary dependencies.
 
 Verify suspected defects against concrete inputs and execution paths. Keep unverified concerns conditional; do not report pattern-matching suspicions as bugs.
+
+## Verify Claims When Needed
+
+When asked to verify behavior, or when a review claim needs execution evidence, follow [verification guidance](references/verification.md). A verification-only request does not require a separate review agent or authorize repairs. Use the current repository's commands and relevant consumer surface, not a frozen per-repo command table. Distinguish actual pass/fail results from skipped checks, empty selections, and blocked environments.
 
 ## Report What Matters
 

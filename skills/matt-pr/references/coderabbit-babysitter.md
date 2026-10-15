@@ -118,8 +118,9 @@ TRIAGE AND FIX
     with the PR link, finding link, decision needed, and evidence inspected.
 17. For Fix, correct the owning cause using the smallest complete, idiomatic
     change. Run the focused regression check, affected repository checks, and
-    any real-surface verification needed by the behavior. Update PR evidence or
-    checked test-plan scenarios if the fix invalidated them.
+    any real-surface verification needed by the behavior. Refresh PR examples,
+    visual comparisons, or benchmark tables if the fix invalidated them. Keep
+    routine test receipts out of the PR body.
 18. Group one coherent reviewed batch in a precisely described follow-up commit.
     Recheck the remote HEAD, then push without rewriting prior commits. If tests
     fail, do not push; finish through the blocker terminal flow.

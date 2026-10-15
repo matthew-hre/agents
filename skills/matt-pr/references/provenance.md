@@ -19,3 +19,5 @@ GitHub's stack feature and `gh stack` CLI are public preview. Verify current beh
 - Jujutsu encourages creating the commit stack before bookmarks and supports either visible review-fix commits or deliberate rewriting according to project preference.
 
 The personal workflow combines these practices but keeps JJ as the sole local history owner. It does not transplant Git staging, interactive rebase, `HEAD~N`, force-push, or branch-checkout instructions into colocated JJ repositories.
+
+Matthew's current policy takes precedence over source workflows: use JJ when `.jj` exists and run pre-commit checks manually; refine local task history freely before a PR is open; append fixes without rewriting history afterward. PR bodies explain the final aggregate outcome with concise bullets, Mermaid diagrams, code, and before/after visual or benchmark tables—not implementation chronology or routine test receipts. Longer technical storytelling is reserved for unusually difficult, impressive, high-risk, or wide-scope changes.
