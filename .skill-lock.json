@@ -353,6 +353,66 @@
       "skillFolderHash": "0e0d3cb3e07ca307fe946ccaf57f6c82eb75124a",
       "installedAt": "2026-10-14T00:00:00.939Z",
       "updatedAt": "2026-10-14T00:00:00.939Z"
+    },
+    "build-design-system": {
+      "source": "design.how",
+      "sourceType": "well-known",
+      "sourceUrl": "https://design.how/.well-known/agent-skills/build-design-system.tar.gz",
+      "skillFolderHash": "",
+      "sourceBaseUrl": "https://design.how",
+      "wellKnownDigest": "sha256:cd0298ea97c501f0387ea5aeef864580c06f5e01de1e8197c7d6376dfe7f568c",
+      "installedAt": "2026-10-23T18:43:42.147Z",
+      "updatedAt": "2026-10-23T18:43:42.147Z"
+    },
+    "component-docs": {
+      "source": "design.how",
+      "sourceType": "well-known",
+      "sourceUrl": "https://design.how/.well-known/agent-skills/component-docs.tar.gz",
+      "skillFolderHash": "",
+      "sourceBaseUrl": "https://design.how",
+      "wellKnownDigest": "sha256:ed50d4af6037f8fcc54f0e1b863a0ef6456551928d0911ebe2d6c0bbabe7e006",
+      "installedAt": "2026-10-23T18:43:42.148Z",
+      "updatedAt": "2026-10-23T18:43:42.148Z"
+    },
+    "design-system-boss": {
+      "source": "design.how",
+      "sourceType": "well-known",
+      "sourceUrl": "https://design.how/.well-known/agent-skills/design-system-boss.tar.gz",
+      "skillFolderHash": "",
+      "sourceBaseUrl": "https://design.how",
+      "wellKnownDigest": "sha256:041cb28de5f14846bd65b185e12059bee3472d24a27797eb23dde1660d5c45ce",
+      "installedAt": "2026-10-23T18:43:42.149Z",
+      "updatedAt": "2026-10-23T18:43:42.149Z"
+    },
+    "migrate-design-system": {
+      "source": "design.how",
+      "sourceType": "well-known",
+      "sourceUrl": "https://design.how/.well-known/agent-skills/migrate-design-system.tar.gz",
+      "skillFolderHash": "",
+      "sourceBaseUrl": "https://design.how",
+      "wellKnownDigest": "sha256:cbf4b27491c8f06058def0e4f2b86c4a53b01edef15f68d0f000377101e8608a",
+      "installedAt": "2026-10-23T18:43:42.149Z",
+      "updatedAt": "2026-10-23T18:43:42.149Z"
+    },
+    "token-mapping": {
+      "source": "design.how",
+      "sourceType": "well-known",
+      "sourceUrl": "https://design.how/.well-known/agent-skills/token-mapping.tar.gz",
+      "skillFolderHash": "",
+      "sourceBaseUrl": "https://design.how",
+      "wellKnownDigest": "sha256:6886cad4fe8fe1a7b706e28dd12105390a78460a38852b118084f42cbfc453e9",
+      "installedAt": "2026-10-23T18:43:42.150Z",
+      "updatedAt": "2026-10-23T18:43:42.150Z"
+    },
+    "ui-review": {
+      "source": "design.how",
+      "sourceType": "well-known",
+      "sourceUrl": "https://design.how/.well-known/agent-skills/ui-review.tar.gz",
+      "skillFolderHash": "",
+      "sourceBaseUrl": "https://design.how",
+      "wellKnownDigest": "sha256:4c1c697ecde90b2b3463905237f910a577c25bbaf8064535066c07ab01638bf1",
+      "installedAt": "2026-10-23T18:43:42.150Z",
+      "updatedAt": "2026-10-23T18:43:42.150Z"
     }
   },
   "dismissed": {
@@ -364,6 +424,7 @@
     "codex",
     "cursor",
     "droid",
+    "fx",
     "gemini-cli",
     "github-copilot",
     "kilo",

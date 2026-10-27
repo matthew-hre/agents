@@ -61,11 +61,7 @@ JJ does not run Git pre-commit hooks automatically. Inspect the repository's hoo
 - Before an external action, state the intended destination/base, material unresolved findings, and any specific authorization still needed. No mandatory readiness receipt or empty status matrix.
 - When authorized to publish, create a draft unless the user explicitly asks for teammate review now. Use an authored title and `gh pr create --draft --body-file <file>` for a single PR; inspect the resulting title, base, and rendered body.
 - After a PR is open, put fixes in new commits on the owning PR layer and leave existing history intact. Update examples, comparisons, and dependent layers when affected, without rewriting open-PR branches.
-- Unless the user opts out, subscribe this thread to PR comments/reviews and CI workflow completions for the exact head commit using the platform's event subscriptions. Refresh the CI subscription after an authorized push. Monitoring reports findings; it does not authorize fixes, pushes, replies, or deployment.
+- Unless the user opts out, watch the PR for new comments/reviews and CI workflow completions on the exact head commit. Use the harness's event subscriptions or channels when available; otherwise poll on an interval (for example `/loop` or a background `gh` watcher). Refresh the CI watch after an authorized push. Monitoring reports findings; it does not authorize fixes, pushes, replies, or deployment.
 - Report actual delivery state: local draft, published draft, ready for review, merged, or deployed. Link the PR and name material verification gaps rather than calling unfinished work complete.
-
-## Optional CodeRabbit Babysitting
-
-Only when explicitly asked to publish and babysit, follow [the bounded babysitter procedure](references/coderabbit-babysitter.md). Keep the PR draft, verify findings rather than trusting bot labels, preserve published history, and never respond to human review threads without permission. Do not trigger bot review or enroll automation merely because a draft exists.
 
 See [provenance](references/provenance.md) when revising this workflow or checking stack-tool assumptions.

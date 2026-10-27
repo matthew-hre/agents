@@ -26,7 +26,7 @@ The user should receive a scoped, understandable change with evidence for its be
 
 - Put behavior in the layer that owns it. Prefer existing APIs, types, helpers, and dependencies over wrappers, parallel shapes, or speculative abstractions.
 - Search the owning module and existing dependencies before adding a helper, schema, type, or component. Use the existing operation when it expresses the intent clearly; do not add a dependency for a trivial primitive.
-- Use precise domain names and direct control flow. Default to no comments; follow the personal comment keep-list rather than adding narration, section labels, TODOs, or restating JSDoc.
+- Use precise domain names and direct control flow. Comments are forbidden unless they meet the closed allowlist in personal preferences: legal requirements, unavoidable external behavior, qualifying lint suppressions, codegen-consumed doc comments, or issue/RFC links explaining constraints code cannot express. Narration and explanations of surprising code we own do not qualify, even when another skill encourages them.
 - Validate untrusted input at its boundary, derive types from the source of truth, and trust established internal contracts. Fix the model rather than hiding a mismatch with a cast, fallback, or impossible-state guard.
 - Keep scope tied to the outcome, including callers and code made dead by the change. Separate behavior-preserving refactoring from intentional behavior changes.
 - For substantial work with multiple coherent units, use `/matt-pr` to keep changes reviewable and each proposed PR independently functional. Do not create a stack for a small change.
@@ -34,7 +34,8 @@ The user should receive a scoped, understandable change with evidence for its be
 ## Before Handoff
 
 - Inspect the complete task diff, including new files and integration points, against the requested outcome and applicable guidance. For stacked work, distinguish this PR's delta from its ancestors. Do not review only the last edit or rely on lint to catch judgment errors.
-- Remove narration comments, weak or abbreviated names, duplicate helpers or shapes, unnecessary exports, speculative options, and unrelated changes you introduced. Preserve required comments and established public contracts; do not churn untouched legacy code.
+- Inspect every added or modified comment, including tests and new files, against the five allowed exceptions. Delete every comment that does not qualify; do not merely shorten narration or relabel it as a "why" comment. Preserve legally required and codegen-consumed comments; do not churn untouched legacy comments.
+- Remove weak or abbreviated names, duplicate helpers or shapes, unnecessary exports, speculative options, and unrelated changes you introduced. Preserve established public contracts; do not churn untouched legacy code.
 - Trace the changed success, boundary, and failure paths. Check that behavior is in the right layer and that the tests can distinguish a plausible wrong implementation. Fix confirmed findings; do not accept reviewer or bot suggestions blindly.
 - Derive checks from the current repository and run the relevant ones after edits. Exercise the surface consumers actually use when behavior changes; rerun the original reproduction for a bug. Report what the evidence proves and what remains unverified.
 - Scale verification to the consequence of being wrong. Security, money, migrations, concurrency, and shared contracts need focused boundary and failure checks, not just happy paths.
@@ -50,7 +51,7 @@ At the end of a larger implementation session, after initial verification, use `
 
 Otherwise delegate when the user asks, when work is genuinely independent, or when a fresh review targets a consequential invariant. Do not delegate routine shell commands, diff gathering, or simple questions. Use specialist skills when they address the actual task, including applicable Purelend team skills. Reviewers may read owning files, callers, and tests; do not restrict them to diff snippets.
 
-Use `/agent-browser` for browser exercise and `/hunk-review` for live Hunk feedback. Preserve user comments, investigate them, and report their disposition. Use `/whiteboard` when requested. Adapt immediately to corrections; run `/matt-reflect` when asked rather than appending it to every correction.
+Use `/agent-browser` for browser exercise and `/hunk-review` for live Hunk feedback. Preserve user comments, investigate them, and report their disposition. Adapt immediately to corrections; run `/matt-reflect` when asked rather than appending it to every correction.
 
 When execution friction meaningfully slows the work or limits verification, suggest a concrete improvement at session end—or during a frustrating blocker. Do not wait for the user to notice. Consider fixing local setup, dependencies, fixtures, credentials configuration, or tooling; improving an existing skill; or creating a skill for a reusable workflow being repeatedly improvised. Name the observed problem, the smallest remedy, where it belongs, and what future work it would unblock. Offer deeper reflection if useful, not just a generic “shall we reflect?” Do not turn a routine hiccup into permanent machinery or change persistent setup without authorization.
 
@@ -60,4 +61,4 @@ Keep updates and the final answer concise: outcome, important reasoning, fresh e
 
 Use `jj` when a `.jj` file or directory exists, otherwise Git. Local checkpoints and refinement of your task's commits are part of implementation; run pre-commit checks manually with JJ. Once a PR is open, append fixes without rewriting its existing commits. Follow the full version-control policy in personal preferences.
 
-Do not push, open or update remote PRs, edit tickets, deploy, or change shared data or infrastructure unless authorized. Never respond to human review comments as the user without explicit permission; report findings and suggested replies in chat. Bot-review automation remains bounded by its specific authorization.
+Do not push, open or update remote PRs, edit tickets, deploy, or change shared data or infrastructure unless authorized. Never respond to human review comments as the user without explicit permission; report findings and suggested replies in chat.

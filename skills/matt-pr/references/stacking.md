@@ -38,4 +38,4 @@ When a large change already exists, inspect its responsibilities before splittin
 
 Once a PR is open, its existing commits are immutable. Put review fixes on the layer that owns the concern, in new commits. Do not rebase dependent open-PR branches to refresh the stack or absorb into a reviewed ancestor. Integrate required parent updates without rewriting existing PR commits; ask if a repository constraint prevents that. Multiple review-fix commits are acceptable; only an explicit user override permits rewriting open-PR history.
 
-Merge bottom-up when authorized. After a lower layer lands, inspect the remaining PR bases and topology before continuing. Refresh exact-head CI subscriptions and evidence after authorized changes. Never infer lower-layer safety from a green stack tip.
+Merge bottom-up when authorized. After a lower layer lands, inspect the remaining PR bases and topology before continuing. Refresh exact-head CI watches and evidence after authorized changes. Never infer lower-layer safety from a green stack tip.

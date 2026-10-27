@@ -57,19 +57,21 @@ When a dependency already in the repository (or clearly standard for the stack) 
 
 ## Comments
 
-Default: no comments. When unsure, delete. Do not shorten a restating comment to keep it.
+Default: no comments. This is a closed allowlist, not a general preference for fewer comments. When unsure, omit or delete. Do not shorten or rephrase narration to keep it.
 
 Keep only:
 
-- Legal or license headers.
-- A constraint forced by an external dependency, platform, vendor, or protocol that this code cannot reshape. Link the issue, RFC, or docs when practical.
-- Formatter escapes such as `prettier-ignore`. Lint or TypeScript suppressions only when the rule is wrong, pedantic, or style-only. If the rule catches a real bug, remove the suppression and fix the code or the type.
-- Public API TSDoc only when the signature cannot express the contract consumers must rely on: conditionally required arguments, thrown errors, side effects, or trust boundaries.
-- A link to an issue or RFC that explains a constraint the code cannot express.
+- Comments required for legal reasons, such as license headers.
+- Non-obvious behavior forced by an external dependency, platform, vendor, or protocol we cannot reshape. State the external constraint; link its source when practical.
+- Lint suppressions only when the rule is faulty, pedantic, or style-only. If it catches a real bug, fix the code instead of suppressing it. Formatter escapes and TypeScript suppressions are not separate exceptions.
+- Doc comments consumed by an actual code-generation process. Identify the generator and keep only what it needs; ordinary JSDoc/TSDoc, editor tooltips, and prose API documentation do not qualify.
+- Issue or RFC links that explain a constraint the code cannot express. A link alone is not an exemption: it must explain that constraint.
 
-Delete narration, restated names, section banners, commented-out code, TODO/FIXME notes, workaround sermons, and `IMPORTANT` / `do not remove` justifications. A public JSDoc whose first sentence paraphrases the symbol name is narration.
+Delete narration, restated names, section banners, commented-out code, TODO/FIXME notes, implementation summaries, test-step commentary, workaround sermons, and `IMPORTANT` / `do not remove` justifications. Explaining why, documenting a public API, or recording a deliberate tradeoff does not by itself qualify. Do not add comments to describe what changed or why a review request was addressed; put that in the handoff or PR description.
 
-If a comment exists to explain surprising behavior in code we own, do not keep the comment. Rename, extract, type, or restructure until the behavior is obvious.
+Surprises in our own code are design problems, not comment opportunities. Rename, type, or restructure until the behavior is obvious; extract only when it creates a coherent responsibility, not just a name for a narrated step.
+
+Before handoff, inspect every comment added or modified in the complete task diff, including tests and new files. Each must satisfy one of the five exceptions above. Delete the rest. Apply this allowlist even when another skill suggests annotations such as `ponytail:` comments; do not churn untouched legacy comments.
 
 ## Scope and Architecture
 
