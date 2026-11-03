@@ -27,6 +27,7 @@ Blank lines are a readability tool for human scanning. Prefer visual separation 
 
 - Prefer a blank line between sibling overloads and between dense top-level type or interface aliases that are not a tight related pair.
 - Prefer a blank line between logical phases inside a function (setup, transform, side effect, return) when the body is more than a few lines.
+- Prefer a blank line between consecutive multi-line control blocks, such as a run of guard `if` blocks that each check a different condition.
 - Do not fight the formatter. Keep blank lines the formatter preserves; do not invent spacing rules the formatter will collapse.
 - Do not insert blank lines inside a short interface or type body, or between every single-line statement in a tiny function.
 
@@ -101,6 +102,7 @@ Before handoff, inspect every comment added or modified in the complete task dif
 ## Version Control and Review History
 
 - If a `.jj` file or directory exists, use `jj` for local version control; otherwise use Git. No separate JJ skill is required.
+- Write commit subjects as lowercase Conventional Commits: `type: summary` or `type(scope): summary`, lowercase except code identifiers, for example `feat: store an assessment set per graph version` or `refactor: split recurring income out of assess-credits`. Keep the body plain prose.
 - JJ does not run Git pre-commit hooks automatically. Inspect the repository's hooks and run their checks manually against the relevant changed files/tree. If they rely on staged files, run the underlying commands with explicit inputs rather than manipulating Git's index. Reinspect any resulting edits.
 - Before a pull request is open, local checkpoints and history refinement are welcome: rebase, squash, combine, split, or absorb your task's commits into a coherent final sequence. Preserve unrelated work and do not rewrite shared history merely because there is no PR.
 - Once a pull request is open, consider its existing commits immutable, including draft PRs and dependent stack branches. Append review fixes and follow-up work; do not squash, rebase, absorb into, edit, or force-rewrite existing PR history. Three review-fix commits are fine. Only an explicit user override changes this rule.
