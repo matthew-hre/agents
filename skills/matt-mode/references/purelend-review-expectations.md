@@ -35,4 +35,17 @@ Apply only the sections relevant to the change. Historical review comments ident
 - Keep PRs coherent and easy to review. Size is a warning, not a hard line-count gate. Include required changesets/generated contracts and relevant boundary/rollout rationale. Perform verification without adding routine test receipts to the PR body.
 - Triage bot findings against current code and intent. Neither a bot severity label nor a completed bot review establishes correctness.
 
+## What Review Caught in November 2026
+
+Across 35 lender-portal PRs, nearly every substantive finding came from two review bots, and most fell into a few groups. Check for these before a reviewer does; the [state and failure checklist](state-and-failure-checklist.md) turns them into questions.
+
+- **Test hygiene, the most frequent finding:** an expected value that repeats an input literal, hand-built fixtures where a factory exists, `fireEvent` where the rules ask for `userEvent.setup()`, hook behavior proved through a component, and a test that passes before the outcome it asserts.
+- **State around writes:** selection or dialog state acted on after it changed, callbacks that touch more than what was submitted, invalidation on success only, and unguarded cache writes.
+- **Partial failure and limits:** a loop of writes that fails midway without saying which, request bodies past the contract's limit, and unbounded memory or parallelism.
+- **Viewer and state coverage:** a missing forbidden state, copy naming an action the viewer lacks, other breakpoints, and accented data.
+- **Sibling parity:** a new page, route, error, or switch that omits what the repository's skill or the neighboring file does.
+- **Drift:** a rule file, ticket link, or copy string that no longer matches the code, and a refactor commit that changes behavior.
+
+Reviewers on the team catch little that these checks do not, with one exception: behavior carried over from lia-uo. When porting a feature, read the original.
+
 Personal naming, signature, and comment rules live in [personal preferences](personal-preferences.md). Verification procedure lives in [verification guidance](../../matt-review/references/verification.md).

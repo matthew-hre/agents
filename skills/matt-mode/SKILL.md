@@ -1,8 +1,7 @@
 ---
 name: matt-mode
-description: "Applies Matthew's engineering preferences throughout implementation, checks the complete result for recurring review issues, and verifies claims before handoff. Use only when explicitly invoked with /matt-mode."
+description: "Applies Matthew's engineering preferences throughout implementation, checks the complete result for recurring review issues, and verifies claims before handoff. Use when writing, changing, or fixing code in a Purelend repository, when turning a prototype or chosen design variant into production code, when fixing review comments, when the user mentions matt mode in any form, or when invoked with /matt-mode. Not for read-only questions, research, or throwaway design exploration."
 compatibility: Cursor and Agent Skills-compatible coding agents with filesystem and shell access.
-disable-model-invocation: true
 icon: code
 color: purple
 ---
@@ -19,7 +18,10 @@ The user should receive a scoped, understandable change with evidence for its be
 
 - Follow the request: questions and planning stay read-only; implementation requests authorize reversible local edits. Do not make the user restate facts you can discover.
 - Read applicable `AGENTS.md`, Cursor rules, and relevant contracts. Trace the owning code, callers, data shapes, nearby patterns, and tests before changing behavior. Preserve unrelated work.
+- Rules load only for the repository the session started in. Before editing a file in any other repository, read that repository's `AGENTS.md` and every rule under its `.claude/rules/` or `.cursor/rules/` whose scope matches the file. Do this for each new file group, not once per session.
+- Check the target repository's own skills for one that covers the task (adding a page, a tab, a form, an endpoint) and follow it. Its checklist is what reviewers compare against.
 - Treat tickets and proposed diagnoses as claims to check. Challenge requirements that add complexity without an existing consumer or a clear product need. Ask about consequential product choices, not routine implementation decisions.
+- These are consequential and get one direct question before building, not a caveat afterwards: a new endpoint or contract shape, departing from what the ticket specifies, departing from a pattern a repository rule describes, and a user-visible behavior change the request did not ask for.
 - For bugs, reproduce the reported failure before naming its cause when possible. Otherwise keep the diagnosis conditional. For feasibility questions, seek the cheapest decisive evidence rather than building production machinery.
 
 ## Make the Smallest Complete Change
@@ -29,6 +31,8 @@ The user should receive a scoped, understandable change with evidence for its be
 - Use precise domain names and direct control flow. Comments are forbidden unless they meet the closed allowlist in personal preferences: legal requirements, unavoidable external behavior, qualifying lint suppressions, codegen-consumed doc comments, or issue/RFC links explaining constraints code cannot express. Narration and explanations of surprising code we own do not qualify, even when another skill encourages them.
 - Validate untrusted input at its boundary, derive types from the source of truth, and trust established internal contracts. Fix the model rather than hiding a mismatch with a cast, fallback, or impossible-state guard.
 - Keep scope tied to the outcome, including callers and code made dead by the change. Separate behavior-preserving refactoring from intentional behavior changes.
+- Exploration code is not production code. When the user picks a variant from a picker or prototype, treat what exists as a sketch: rebuild or re-derive it against the repository rules and the [state and failure checklist](references/state-and-failure-checklist.md) before calling it done. Roles, callbacks, and state written to make a demo work carry no presumption of correctness.
+- When a change departs from a pattern that a rule file or skill describes, update that rule in the same change.
 - For substantial work with multiple coherent units, use `/matt-pr` to keep changes reviewable and each proposed PR independently functional. Do not create a stack for a small change.
 
 ## Before Handoff
@@ -36,18 +40,33 @@ The user should receive a scoped, understandable change with evidence for its be
 - Inspect the complete task diff, including new files and integration points, against the requested outcome and applicable guidance. For stacked work, distinguish this PR's delta from its ancestors. Do not review only the last edit or rely on lint to catch judgment errors.
 - Inspect every added or modified comment, including tests and new files, against the five allowed exceptions. Delete every comment that does not qualify; do not merely shorten narration or relabel it as a "why" comment. Preserve legally required and codegen-consumed comments; do not churn untouched legacy comments.
 - Remove weak or abbreviated names, duplicate helpers or shapes, unnecessary exports, speculative options, and unrelated changes you introduced. Preserve established public contracts; do not churn untouched legacy code.
-- Trace the changed success, boundary, and failure paths. Check that behavior is in the right layer and that the tests can distinguish a plausible wrong implementation. Fix confirmed findings; do not accept reviewer or bot suggestions blindly.
+- Trace the changed success, boundary, and failure paths by answering the [state and failure checklist](references/state-and-failure-checklist.md) for this change. Check that behavior is in the right layer and that the tests can distinguish a plausible wrong implementation. Fix confirmed findings; do not accept reviewer or bot suggestions blindly.
+- Check the diff file by file against the rules that match each file, and compare each new route, component, hook, or test with its nearest existing sibling for what the sibling does that the new one omits (permission gate, metadata, typed error, factory).
 - Derive checks from the current repository and run the relevant ones after edits. Exercise the surface consumers actually use when behavior changes; rerun the original reproduction for a bug. Report what the evidence proves and what remains unverified.
 - Scale verification to the consequence of being wrong. Security, money, migrations, concurrency, and shared contracts need focused boundary and failure checks, not just happy paths.
 - Use existing tools or disposable probes for validation. Keep a new test or script only when it protects behavior consumers rely on or has a demonstrated ongoing use; evidence does not require permanent machinery.
 
 Read [verification guidance](../matt-review/references/verification.md) when choosing evidence for a consequential change or when the relevant surface is difficult to exercise. A blocked check is a limitation to report, not permission to claim success or silently reduce coverage.
 
+When the environment blocks a check (expired sign-in, a service serving another checkout, a missing route), say so as soon as it happens, with the exact step that would unblock it, so the user can fix it while you continue. Do not substitute a build or a unit test and move on quietly.
+
+## Hand Off Open Items First
+
+A handoff that still has an open decision, a known gap, or an unexercised surface starts with a short list headed "Needs your decision", before any summary of what was done. One line each: what it is, what happens if it ships as is, and what you recommend. Do not place these in the middle or at the end of a long summary.
+
+Until the user answers each item (fix it, or ship it as a named known limit), treat a later "open a PR" as not yet covering them: ask once, briefly, naming the items. An item the user accepts goes into the PR body.
+
 ## Use Help Deliberately
 
 Answer conversational questions conversationally. Work directly by default. Plan when sequencing, uncertainty, or coordination benefits from it—not to fill a template. Do not print route/effort/risk labels, preflight receipts, skipped-stage lists, or a default PR-readiness verdict.
 
-At the end of a larger implementation session, after initial verification, use `/matt-review` with one fresh read-only reviewer. Have it inspect the complete session diff for major correctness or scope gaps and enforcement of personal preferences, applicable team guidance, and project rules. This is the default for substantial features, refactors, or coupled behavior changes—not every edit or follow-up. Give it the intent, exact diff, policy sources, and evidence, not the author's defense. Adjudicate its findings, fix confirmed issues, and rerun affected checks. If independent review is unavailable, self-review and disclose the limitation; respect an explicit request to skip delegation.
+At the end of a larger implementation session, after initial verification, use `/matt-review` with one fresh read-only reviewer. Have it inspect the complete session diff for major correctness or scope gaps and enforcement of personal preferences, applicable team guidance, and project rules. This is the default for substantial features, refactors, or coupled behavior changes—not every local edit or conversational follow-up. Anything about to be published is reviewed regardless of size. Give it the intent, exact diff, policy sources, and evidence, not the author's defense. Adjudicate its findings, fix confirmed issues, and rerun affected checks. If independent review is unavailable, self-review and disclose the limitation; respect an explicit request to skip delegation.
+
+The review covers the tree that will be published. A review that ran before later edits, a scope change, a restack, or a round of review fixes does not cover them: run it again on what changed. A harness's built-in code review that runs in your own context is a useful second pass, not the independent review.
+
+Adjudicate findings by consequence, not by the reviewer's label. Wrong behavior on an interaction a user can plausibly perform, a failure the user is not told about, stale state, and a contract or resource limit are fixed before publication even when the reviewer called them minor, optional, rare, or unverified; verify the unverified ones rather than dropping them. Account for every finding by name as fixed, declined with a reason, or awaiting the user's decision. A partial instruction such as "fix the top findings" still gets the list of what was left.
+
+Fixing a finding is a change like any other. A fix that restructures code, touches shared code, or adds state gets the checklist and a fresh look at the affected paths. A fix must not change user-visible behavior beyond the finding; if the better fix does, ask first and pin the new behavior with a test.
 
 Otherwise delegate when the user asks, when work is genuinely independent, or when a fresh review targets a consequential invariant. Do not delegate routine shell commands, diff gathering, or simple questions. Use specialist skills when they address the actual task, including applicable Purelend team skills. Reviewers may read owning files, callers, and tests; do not restrict them to diff snippets.
 
